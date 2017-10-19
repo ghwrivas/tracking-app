@@ -1,0 +1,35 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		function loadImage() {
+			$('#imgCaptcha').attr('src', $('#imgCaptcha').attr('src'));
+		}
+	</script>
+	<div id="captcha">
+		<spring:message code="prompt_input_captcha" var="prompt_input_captcha" />
+		<spring:message code="title_reload_captcha" var="title_reload_captcha" />
+		<spring:url value="/captcha/getSimpleCaptchaImage.do" var="captcha"></spring:url>
+		<img id="imgCaptcha" style="margin-left: 131px;" alt="captcha"
+			src="${captcha}" onclick="loadImage();"
+			title="${title_reload_captcha}" /> <br /> <label
+			for="txtCaptchaAnswer">Captcha:</label> <input type="text"
+			maxlength="8" name="txtCaptchaAnswer" id="txtCaptchaAnswer" value=""
+			style="width: 250px" class="validate[required,minSize[8]]" /> <br />
+		<span id="txtCaptchaAnswerErrors" class="errors">${captchaError}</span>
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'txtCaptchaAnswer',
+				widgetType : 'dijit.form.ValidationTextBox',
+				widgetAttrs : {
+					promptMessage : '${prompt_input_captcha}',
+					required : true
+				}
+			}));
+		</script>
+	</div>
+	<br />
+</jsp:root>

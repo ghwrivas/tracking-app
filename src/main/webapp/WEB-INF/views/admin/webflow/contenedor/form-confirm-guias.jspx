@@ -1,0 +1,55 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#selecctall').click(function(event) {
+				if (this.checked) {
+					$('.checkbox-confirm-guias').each(function() {
+						this.checked = true;
+					});
+				} else {
+					$('.checkbox-confirm-guias').each(function() {
+						this.checked = false;
+					});
+				}
+			});
+		});
+	</script>
+	<spring:message var="title"
+		code="label_title_webflow_confirm_guias_agregadas_contendor"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<ul class="checkboxes-list">
+			<li><input type="checkbox" id="selecctall" />
+			<spring:message code="label_select_all" /></li>
+		</ul>
+		<form:form modelAttribute="confirmGuiasAlmacenForm" cssClass=".submit-form"
+			id="confirmGuiasAlmacenForm" method="POST"
+			onsubmit="return validateOnSubmit(this);">
+			<util:confirm-submit select="selecctall" focus="selecctall"
+				submit="confirm" />
+			<ul class="checkboxes-list">
+				<form:checkboxes element="li" items="${guias}"
+					cssClass="checkbox-confirm-guias" path="guiasIds" />
+			</ul>
+			<div class="submit-web-flow">
+				<spring:message var="confirm" code="button_confirm_almacen_guias"
+					htmlEscape="false" />
+				<input type="submit" id="confirm" name="confirm"
+					value="${fn:escapeXml(confirm)}" />
+					<span style="margin-left: 5px;"> </span>
+				<spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+				<input type="submit" id="cancel" name="cancel"
+					value="${fn:escapeXml(cancel)}" />
+			</div>
+		</form:form>
+	</util:panel>
+</div>

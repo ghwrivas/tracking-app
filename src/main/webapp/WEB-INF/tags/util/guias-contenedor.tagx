@@ -1,0 +1,86 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<jsp:directive.attribute name="delete" type="java.lang.Boolean"
+		required="false" rtexprvalue="true"
+		description="Include 'delete' link into table (default true)" />
+
+	<c:if test="${empty delete}">
+		<c:set var="delete" value="true" />
+	</c:if>
+	<c:choose>
+	<c:when test="${contenedor.guias.size() > 0}">
+		<table>
+		<thead>
+
+			<tr>
+			<th colspan="11">
+			<spring:message code="label_sub_packages_added_container"></spring:message>
+			</th>
+			</tr>
+			<tr>
+			<th><spring:message
+					code="label_ve_com_tracking_model_guia_numero" /></th>			
+			<th><spring:message code="label_ve_com_tracking_model_tipoembalaje" /></th>
+			<th><spring:message code="label_ve_com_tracking_model_guia_largo"></spring:message></th>
+			<th><spring:message code="label_ve_com_tracking_model_guia_ancho"></spring:message></th>
+			<th><spring:message code="label_ve_com_tracking_model_guia_alto"></spring:message></th>
+			
+			<th><spring:message code="label_ve_com_peso_model_guia" arguments="(lb)" /></th>
+			<th><spring:message code="label_ve_com_peso_volumetrico_model_guia" arguments="(vlb)" /></th>
+			<th><spring:message code="label_ve_com_total_volume_model_guia" arguments="(ft)" /></th>
+			<th><spring:message
+					code="label_ve_com_tracking_model_guia_estatus" /></th>
+			<c:if test="${delete}">
+				<th></th>
+			</c:if>
+			
+			</tr>
+					
+		</thead>
+		<tbody>
+			<c:forEach items="${contenedor.guias}" var="codigoGuia" varStatus="status">
+				<tr>
+					<td>${codigoGuia.codigo}</td>
+				<td>${codigoGuia.guiaId.tipoEmbalajeId.nombre}</td>
+				<td>${codigoGuia.guiaId.largo}</td>
+				<td>${codigoGuia.guiaId.ancho}</td>
+				<td>${codigoGuia.guiaId.alto}</td>
+				<td><fmt:formatNumber value="${codigoGuia.guiaId.peso}"
+						maxFractionDigits="2" /></td>
+				<td><fmt:formatNumber value="${codigoGuia.guiaId.pesoVolumetrico}"
+						maxFractionDigits="2" /></td>
+				<td><fmt:formatNumber value="${codigoGuia.guiaId.volumen}"
+						maxFractionDigits="2" /></td>
+
+					<td>${codigoGuia.estatus}</td>
+					<c:if test="${delete}">
+						<td class="utilbox"><spring:url
+								value="/resources/images/delete.png" var="image_url"></spring:url>
+							<spring:url value="" var="delete_url" htmlEscape="false">
+								<spring:param name="listIndex" value="${status.index}" />
+								<spring:param name="_eventId" value="delete" />
+								<spring:param name="execution" value="${flowExecutionKey}" />
+							</spring:url> <spring:message code="label_delete_guia_contenedor"
+								var="message_delete" /> <a href="${delete_url}"><img
+								alt="${message_delete}" title="${message_delete}"
+								src="${image_url}" /></a></td>
+					</c:if>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>	
+	</c:when>
+	
+	<c:otherwise>
+		<spring:message code="label_not_products_add_container"></spring:message>
+	</c:otherwise>
+	</c:choose>
+
+</div>

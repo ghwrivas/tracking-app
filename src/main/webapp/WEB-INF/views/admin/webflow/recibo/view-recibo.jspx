@@ -1,0 +1,142 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+		<spring:message code="confirm_save_changes" var="confirm_message" htmlEscape="false" />
+	<script type="text/javascript">
+	
+		function validateOnSubmit(form) {
+			var action = $('#action').val();
+			if (action != '') {
+				if (confirm('${confirm_message}')) {
+					$("#action").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}	
+			} else {
+				return true;
+			}
+		}
+	</script>
+	<spring:message var="title" code="label_title_recibo_de_almacen"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<c:if test="${not empty recibo.id }">
+			<h3>Editando ${fn:escapeXml(title)}: ${recibo.id}</h3>
+		</c:if>
+		<c:if test="${empty recibo.id }">
+			<h3>${fn:escapeXml(title)}</h3>
+		</c:if>
+		<table>
+			<thead>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_tipotransportacion"></spring:message>
+				</th>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_cliente"></spring:message>
+				</th>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_estatus"></spring:message>
+				</th>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_created"></spring:message>
+				</th>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_creadorid"></spring:message>
+				</th>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_origen"></spring:message></th>
+				<th><spring:message
+						code="label_ve_com_tracking_model_guia_destino"></spring:message>
+				</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>${recibo.tipoTransportacion}</td>
+					<td>${recibo.cliente.nombreCompleto}</td>
+					<td>${recibo.estatus}</td>
+					<td><fmt:formatDate value="${recibo.created.time}" /></td>
+					<td>${recibo.creadorId.nombreCompleto}</td>
+					<td>${recibo.origen.ciudad}</td>
+					<td>${recibo.destino.ciudad}</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+
+		<util:cargos-aplicables />
+		<br />
+
+		<c:if test="${recibo.estatus == 'CONFIRMADO'}">
+			<util:guias-recibo delete="false" />
+		</c:if>
+		<c:if test="${recibo.estatus != 'CONFIRMADO'}">
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR')">
+				<util:guias-recibo delete="true" />
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_LIBERADOR')">
+				<util:guias-recibo delete="false" />
+			</sec:authorize>			
+		</c:if>
+
+		<br />
+		<c:if test="${not empty recibo.id }">
+			<spring:url value="/admin/mediaview/recibo/${recibo.id}.pdf"
+				var="url_recibo"></spring:url>
+			<spring:url
+				value="/admin/mediaview/recibo/etiquetas/${recibo.id}.pdf"
+				var="url_etiquetas"></spring:url>
+			<form action="${url_recibo}" method="get" target="_blank">
+				<div class="submit-web-flow">
+					<select name="moneda" id="moneda">
+						<option id="DOLAR" value="DOLAR">DOLAR</option>
+						<option id="DESTINO" value="DESTINO">DESTINO</option>
+					</select> <input type="submit" id="recibo" name="recibo" value="Recibo" />
+				</div>
+			</form>
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR')">
+			<form action="${url_etiquetas}" method="get" target="_blank">
+				<div class="submit-web-flow">
+					<input type="submit" id="recibo" name="recibo" value="Etiquetas" />
+					<span style="margin-left: 5px;"> </span>
+				</div>
+			</form>
+			</sec:authorize>
+		</c:if>
+		<form method="POST" onsubmit="return validateOnSubmit(this);">
+			<input type="hidden" id="action" />
+			<div class="submit-web-flow">
+				<c:if test="${recibo.estatus != 'CONFIRMADO'}">
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR')">
+						<spring:message var="add_guia" code="button_add_guia"
+							htmlEscape="false" />
+						<input type="submit" id="add_guia" name="_eventId_add_guia"
+							value="${fn:escapeXml(add_guia)}" onclick="$('#action').val('');" />
+						<span style="margin-left: 5px;"> </span>
+						<spring:message var="cargos" text="Guardar" htmlEscape="false" />
+						<input type="submit" id="cargos" name="_eventId_cargos" onclick="$('#action').val('');"
+							value="${fn:escapeXml(cargos)}" />
+						<span style="margin-left: 5px;"> </span>
+						<spring:message var="confirmar_pago" code="button_confirmar_pago"
+							htmlEscape="false" />
+						<input type="submit" id="confirmar_pago" name="_eventId_confirmar"
+							value="${fn:escapeXml(confirmar_pago)}" onclick="$('#action').val('confirmar_pago');" />
+						<span style="margin-left: 5px;"> </span>
+					</sec:authorize>					
+				</c:if>
+				<spring:message var="cancel" text="Cancelar" htmlEscape="false" />
+				<input type="submit" id="cancel" name="_eventId_cancel" onclick="$('#action').val('');"
+					value="${fn:escapeXml(cancel)}" /> <span style="margin-left: 5px;">
+				</span>
+			</div>
+		</form>
+	</util:panel>
+</div>

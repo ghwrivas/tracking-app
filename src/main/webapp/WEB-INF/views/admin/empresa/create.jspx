@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_ve_com_tracking_model_Empresa" modelAttribute="empresa" path="/admin/empresa" render="${empty dependencies}" z="snRaSbxLP2wkVMyDgayWKoz5YS8=">
+        <field:input field="nombre" id="c_ve_com_tracking_model_Empresa_nombre" required="true" z="77+vGzevRnOA7IiwgNA0ayhxX6U="/>
+        <field:input field="direccion" id="c_ve_com_tracking_model_Empresa_direccion" required="true" z="XdruMOaCStu4a4SU7S0LMYvHXp8="/>
+        <field:input field="telefono" id="c_ve_com_tracking_model_Empresa_telefono" required="true" z="uVl2y4uTiy470mYy7jnEjUnHyFE="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_ve_com_tracking_model_Empresa" render="${not empty dependencies}" z="FKOKHnbLOFC5iF7U7JPQZ9LvoxI="/>
+</div>

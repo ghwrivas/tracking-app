@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_ve_com_tracking_model_ReciboAlmacen" object="${reciboalmacen}" path="/admin/recibo" z="ETU+DFkXTBuhF6Xk1G6l8GzVLbU=">
+        <field:display field="creatorId" id="s_ve_com_tracking_model_ReciboAlmacen_creatorId" object="${reciboalmacen}" z="3DB+iv01EnSCqJZZ1YQuWL1u4Dw="/>
+        <field:display field="cliente" id="s_ve_com_tracking_model_ReciboAlmacen_cliente" object="${reciboalmacen}" z="0X+0xZXX+oCiin69aLYZScX+5yM="/>
+        <field:display field="origen" id="s_ve_com_tracking_model_ReciboAlmacen_origen" object="${reciboalmacen}" z="AST+ulZwsgKCB9htIsF8hMYvJ8o="/>
+        <field:display field="destino" id="s_ve_com_tracking_model_ReciboAlmacen_destino" object="${reciboalmacen}" z="eTrnj0XoI+q1fk1NrMOWPdoX/KU="/>
+        <field:display field="tipoTransportacion" id="s_ve_com_tracking_model_ReciboAlmacen_tipoTransportacion" object="${reciboalmacen}" z="mqWuMgY79A96bhZEbXnRZmJwrz8="/>
+        <field:display field="tipoCargo" id="s_ve_com_tracking_model_ReciboAlmacen_tipoCargo" object="${reciboalmacen}" z="dwP3hLYibyVRkuhdCqXuSw7YVac="/>
+        <field:display field="precioCargo" id="s_ve_com_tracking_model_ReciboAlmacen_precioCargo" object="${reciboalmacen}" z="LX9pq5pRXNGNiv8JRCqK4lm/1xU="/>
+        <field:display field="totalCargo" id="s_ve_com_tracking_model_ReciboAlmacen_totalCargo" object="${reciboalmacen}" z="LqGARJ/I1bD9CZUAqoukZ8DbXkY="/>
+        <field:display field="descuento" id="s_ve_com_tracking_model_ReciboAlmacen_descuento" object="${reciboalmacen}" z="GniqeQGU1nkW/dKdS3/5sJwSZ2I="/>
+        <field:display field="totalCargoCambio" id="s_ve_com_tracking_model_ReciboAlmacen_totalCargoCambio" object="${reciboalmacen}" z="dEk9yqvyLzTL7GaeGH2M1vSwKgI="/>
+        <field:display calendar="true" dateTimePattern="${reciboAlmacen_created_date_format}" field="created" id="s_ve_com_tracking_model_ReciboAlmacen_created" object="${reciboalmacen}" z="M3TUFsR3M+sYWS/itxbKvAhAO2k="/>
+        <field:display field="estatus" id="s_ve_com_tracking_model_ReciboAlmacen_estatus" object="${reciboalmacen}" z="UimyWf/0QWn3dkZvwfYGgdSyAn8="/>
+    </page:show>
+</div>

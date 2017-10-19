@@ -1,0 +1,23 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<jsp:directive.attribute name="path" type="java.lang.String"
+		required="true" rtexprvalue="true"
+		description="Path a donde redireccionar cuando se cancele la vista" />
+	<jsp:directive.attribute name="label" type="java.lang.String"
+		required="true" rtexprvalue="true"
+		description="Codigo i18n del label para el boton" />
+	<spring:url value="${path}" var="passreset" />
+	<script type="text/javascript">
+		function forgetPassword() {
+			var url = '<c:out value="${passreset}" escapeXml="false" ></c:out>';
+			url = url.replace(/amp;/g, '');
+			window.location.assign(url);
+		}
+	</script>
+	<spring:message code="${label}" var="button_label" htmlEscape="false" />
+	<input type="button" value="${button_label}" onclick="forgetPassword()" />
+</jsp:root>

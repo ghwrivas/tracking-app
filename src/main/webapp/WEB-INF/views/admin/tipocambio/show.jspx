@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_ve_com_tracking_model_TipoCambio" delete="false" object="${tipocambio}" path="/admin/tipocambio" z="kZ+89nTA0NlSKuc1IxnQom1rVhw=">
+        <field:display field="country" id="s_ve_com_tracking_model_TipoCambio_country" object="${tipocambio}" z="uadNEfUPkkPR68V+5Fdy48ZM5ZE="/>
+        <field:display field="valorDolar" id="s_ve_com_tracking_model_TipoCambio_valorDolar" object="${tipocambio}" z="3g9GCxGnA4sGySi1nrqA79MCrss="/>
+    </page:show>
+</div>

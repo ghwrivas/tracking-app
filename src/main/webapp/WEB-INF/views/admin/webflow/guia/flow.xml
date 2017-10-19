@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<secured attributes="ROLE_USER, ROLE_ADMIN" match="any" />
+
+	<persistence-context />
+
+	<on-start>
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.categorias"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.embalajes"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.transportacion"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.destinos"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.cargos"
+			result-type="java.io.Serializable" />
+		<evaluate expression="guiaManager.createItem()" result="flowScope.item"></evaluate>
+		<evaluate expression="guiaManager.createPaquetesSelectedForm()" result="flowScope.paquetesSelected"></evaluate>		
+	</on-start>
+
+	<decision-state id="guia-null">
+		<on-entry>
+			<evaluate expression="guiaManager.createGuia(requestParameters.user)"
+				result="flowScope.guia" />
+		</on-entry>
+		<if test="flowScope.guia != null" then="form-add-item" else="guia-not-null" />
+	</decision-state>
+
+	<decision-state id="guia-not-null">
+		<on-entry>
+			<evaluate expression="guiaManager.editGuia(requestParameters.id)"
+				result="flowScope.guia" />
+		</on-entry>
+		<if test="flowScope.guia != null" then="form-add-item" else="end-to-list" />
+	</decision-state>
+
+	<!-- A sample view state -->
+	<view-state id="form-add-item" view="admin/webflow/guia/form-add-item" model="item">
+		<on-render>
+			<evaluate expression="guiaManager.populateDataReferenceFormAddItem"></evaluate>
+		</on-render>
+		<transition on="add" to="add-item"></transition>
+		<transition on="next" to="form-guia" bind="false" validate="false" />
+		<transition on="cancel" to="end-state" bind="false" validate="false" />
+	</view-state>
+	
+	<!-- View 1 - Datos de la Guia -->
+	<view-state id="form-guia" view="admin/webflow/guia/form-guia"
+		model="guia">
+		<on-render>
+			<evaluate expression="guiaManager.populateDataReferenceFormGuia"></evaluate>
+		</on-render>
+		<transition on="back" to="form-add-item" bind="false" validate="false" />		
+		<transition on="save" to="save-guia"></transition>
+		<transition on="cancel" to="end-state" bind="false" validate="false" />
+	</view-state>
+
+	<view-state id="view-saved-guia"
+		view="admin/webflow/guia/view-saved-guia">
+		<transition on="paquetes" to="view-paquetes" bind="false"
+			validate="false" />	
+		<transition on="aceptar" to="end-to-list" bind="false"
+			validate="false" />
+	</view-state>
+
+	<view-state id="view-paquetes" view="admin/webflow/guia/view-paquetes" model="paquetesSelected">
+		<transition on="save" to="process-paquetes" />	
+		<transition on="cancel" to="view-saved-guia" bind="false"
+			validate="false" />
+	</view-state>
+	
+	<action-state id="process-paquetes">
+		<evaluate expression="guiaManager.processPaquetes" />
+		<transition on="success" to="view-paquetes"></transition>
+		<transition on="error" to="view-paquetes"></transition>
+	</action-state>
+	
+	<action-state id="add-item">
+		<evaluate expression="guiaManager.addItem" />
+		<transition on="success" to="form-add-item">
+			<evaluate expression="guiaManager.createItem()" result="flowScope.item" />
+		</transition>
+		<transition on="error" to="form-add-item"></transition>
+	</action-state>
+
+	<action-state id="save-guia">
+		<evaluate expression="guiaManager.saveGuia" />
+		<transition on="success" to="view-saved-guia"></transition>
+		<transition on="error" to="form-guia">
+			<evaluate expression="guiaManager.createItem()" result="flowScope.item" />
+		</transition>
+	</action-state>
+
+	<!-- end state -->
+	<end-state id="end-state"
+		view="externalRedirect:contextRelative:admin/package/generate/guias?page=1&amp;size=10" />
+
+	<!-- end state -->
+	<end-state id="end-to-list"
+		view="externalRedirect:contextRelative:admin/guia/list?page=1&amp;size=10" />
+		
+</flow>

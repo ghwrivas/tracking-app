@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="confirm_save_changes" var="confirm_message" htmlEscape="false" />
+	<script type="text/javascript">
+	<![CDATA[
+			dojo.addOnLoad(function() {
+				dojo.byId('_ciRifPassport_id').focus();
+				dojo.byId('_ciRifPassport_id').select();
+				
+				$("#_ciRifPassport_id").on("keyup", function(e){
+					
+					$("#_ciRifPassport_id").val($("#_ciRifPassport_id").val().toUpperCase());
+				});
+			});
+
+			function validateOnSubmit(form) {
+				var valid = Spring.validateAll();
+				if (!valid) {
+					return false;
+				} else {
+					if (confirm('${confirm_message}')) {
+						$("#save").attr("disabled", "disabled");
+						return true;
+					} else {
+						return false;
+					}
+
+				}
+			}
+	]]>
+	</script>
+	<spring:message code="label_panel_create_account" var="title" />
+	<util:panel id="title" title="${title}">
+		<form:form id="accountCreateForm" method="POST"
+			modelAttribute="accountCreateForm"
+			onsubmit="return validateOnSubmit(this);" cssClass=".submit-form">
+			
+						<field:input field="ciRifPassport"
+				id="c_ve_com_tracking_model_Users_ciRifPassport" promptMessage="prompt_ve_com_tracking_model_users_ciRif" required="true"
+				z="user-managed" />
+				
+			<field:input field="username"
+				id="c_ve_com_tracking_model_Users_username" required="true"
+				z="user-managed" promptMessage="prompt_ve_com_tracking_model_users_username" />				
+
+			<field:input field="firstName"
+				id="c_ve_com_tracking_model_Users_firstName" required="true"
+				z="user-managed" promptMessage="prompt_ve_com_tracking_model_users_name"/>
+
+			<field:input field="lastName"
+				id="c_ve_com_tracking_model_Users_lastName" required="true"
+				z="user-managed" promptMessage="prompt_ve_com_tracking_model_users_name"/>
+
+
+			<field:textarea id="c_ve_com_tracking_model_Users_direccion"
+				field="direccion" required="true" z="user-managed" />
+
+
+			<field:input field="telefono"
+				id="c_ve_com_tracking_model_Users_telefono" required="true"
+				z="user-managed" />
+
+			<field:input field="bbPin" id="c_ve_com_tracking_model_Users_bbPin"
+				z="user-managed" />
+
+			<field:input field="email" id="c_ve_com_tracking_model_Users_email"
+				label="Email" required="true"
+				validationMessageCode="field_invalid_email" z="user-managed" />
+
+			<field:input field="confirmEmail"
+				id="c_ve_com_tracking_model_Users_email_confirm" required="true"
+				validationMessageCode="field_invalid_email" z="user-managed" promptMessage="prompt_ve_com_tracking_model_users_email_confirm"/>
+
+			<field:input field="password" type="password"
+				id="c_ve_com_tracking_model_Users_password" required="true"
+				z="user-managed" />
+
+			<field:input field="confirmPassword" type="password"
+				id="c_ve_com_tracking_model_Users_password_confirm" required="true"
+				z="user-managed" promptMessage="prompt_ve_com_tracking_model_users_password_confirm"/>
+				
+			<field:captcha />
+			<div class="submit" id="accountCreateForm_submit">
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'save',
+						event : 'onclick'
+					}));
+				</script>
+				<spring:message code="button_save" var="button_save" />
+				<input id="save" type="submit" value="${button_save}" />
+				
+				<span style="margin-left: 5px;"> </span>				
+				<field:cancel path="/" label="button_cancel" />
+				
+			</div>
+		</form:form>
+	</util:panel>
+</div>

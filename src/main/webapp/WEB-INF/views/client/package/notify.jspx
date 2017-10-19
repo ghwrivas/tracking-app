@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="confirm_save_changes" var="confirm_message" htmlEscape="false" />
+	<script type="text/javascript">
+		dojo.addOnLoad(function() {
+			var elements = document.getElementsByName("hasTracking");
+			if (elements[0].checked) {
+				poseeTracking(elements[0]);
+			} else {
+				poseeTracking(elements[1]);
+			}
+			dojo.byId('_tracking_id').focus();
+		});
+		function validateOnSubmit(form) {
+			var valid = Spring.validateAll();
+			if (!valid) {
+				return false;
+			} else {
+				if (confirm('${confirm_message}')) {
+					$("#proceed").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}				
+
+			}
+		}
+
+		function poseeTracking(check) {
+			var input = dojo.byId('_c_ve_com_tracking_model_notify_tracking_id');
+			if (check.value == 's') {
+				input.style.visibility = 'visible';
+				dojo.byId('_tracking_id').focus();
+			} else {
+				input.style.visibility = 'hidden';
+				dojo.byId('_tracking_id').value = '';
+			}
+
+		}
+	</script>
+	<spring:message code="label_title_panel_nofity_package" var="title"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<form:form id="packageNotifyForm" method="POST" cssClass=".submit-form"
+			modelAttribute="packageNotifyForm"
+			onsubmit="return validateOnSubmit(this);">
+			<div id="form">
+				<div id="left" style="float: left; width: 40%;">
+					<div align="left" float="left" class="radiobuttons">
+						<p>
+							<spring:message code="label_has_tracking" />
+							:
+						</p>
+						<spring:message code="label_boolean_value_true" var="label_true" />
+						<spring:message code="label_boolean_value_false" var="label_false" />
+						<form:radiobutton path="hasTracking" value="s"
+							label="${label_true}" onclick="poseeTracking(this)" />
+						<spring:url var="usa_tracking" value="true" />
+						<form:radiobutton path="hasTracking" value="n"
+							label="${label_false}" onclick="poseeTracking(this)" />
+						<spring:url var="usa_tracking" value="false" />
+						<form:errors path="hasTracking" cssClass="error" />
+					</div>
+					<br />
+					<field:input field="tracking"
+						id="c_ve_com_tracking_model_notify_tracking" required="false"
+						z="user-managed" />
+					<field:select field="empresaEnvioId"
+						id="c_ve_com_tracking_model_notify_empresaEnvioId" itemValue="id"
+						itemLabel="name" items="${empresaenvioes}"
+						path="/admin/empresaenvio" required="true" />
+					<field:textarea id="c_ve_com_tracking_model_notify_descripcion"
+						field="descripcion" required="true" />
+					<field:checkbox field="asegurar"
+						id="c_ve_com_tracking_model_notify_asegurar" />
+					<field:captcha />
+					<div class="submit" id="packageNotifyForm_submit">
+						<script type="text/javascript">
+							Spring
+									.addDecoration(new Spring.ValidateAllDecoration(
+											{
+												elementId : 'proceed',
+												event : 'onclick'
+											}));
+						</script>
+						<spring:message code="button_save" var="button_save" />
+						<input id="proceed" type="submit" value="${button_save}" />
+						<span style="margin-left: 5px;"> </span>		
+						<field:cancel path="/client/package/list?page=1&amp;size=10" label="button_cancel" />						
+						<br />
+						<br />
+					</div>
+
+				</div>
+				<div id="right" style="float: right; width: 60%;">
+					<spring:url var="image_ayuda"
+						value="/resources/images/ayudatracking.png" />
+					<img alt="Tracking" src="${image_ayuda}" />
+				</div>
+			</div>
+		</form:form>
+	</util:panel>
+</div>

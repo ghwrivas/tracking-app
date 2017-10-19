@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_ve_com_tracking_model_Users" modelAttribute="users" path="/admin/users" render="${empty dependencies}" z="VMjzeZSTXYAA2FxQT0Gwkp47fP8=">
+        <field:input field="username" id="c_ve_com_tracking_model_Users_username" required="true" z="user-managed"/>
+        <field:input field="ciRifPassport" id="c_ve_com_tracking_model_Users_ciRifPassport" required="true" z="user-managed"/>
+        <field:simple field="authoritieses" id="c_ve_com_tracking_model_Users_authoritieses" messageCode="entity_reference_not_managed" messageCodeAttribute="Authorities" render="false" z="user-managed"/>
+        <field:input field="password" id="c_ve_com_tracking_model_Users_password" required="true" type="password" z="user-managed"/>
+        <field:checkbox field="enabled" id="c_ve_com_tracking_model_Users_enabled" z="XMAtV91YEUVekLgBqI/uxUir4mc="/>
+        <field:input field="firstName" id="c_ve_com_tracking_model_Users_firstName" required="true" z="f2/TCMw26KddQw+YNZJMnfnFgSU="/>
+        <field:input field="lastName" id="c_ve_com_tracking_model_Users_lastName" required="true" z="qjmZaFsabCRLLKYkcj/BMCCmV8c="/>
+        <field:input field="direccion" id="c_ve_com_tracking_model_Users_direccion" required="true" z="sZMMkzb9gaR8fEVmSPAdgVdvUbc="/>
+        <field:input field="email" id="c_ve_com_tracking_model_Users_email" required="true" validationMessageCode="field_invalid_email" z="CqWYU9AuT3WiupkAdTOeqYiEWIU="/>
+        <field:input field="telefono" id="c_ve_com_tracking_model_Users_telefono" required="true" z="nshIzjU2kS5PYV4aUitgBnSmJJ4="/>
+        <field:input field="bbPin" id="c_ve_com_tracking_model_Users_bbPin" z="+GaTuJoqWqeybFiRnDbyokNZw1Q="/>
+        <field:datetime dateTimePattern="${users_created_date_format}" field="created" id="c_ve_com_tracking_model_Users_created" readonly="true" required="true"/>
+        <field:datetime dateTimePattern="${users_updated_date_format}" field="updated" id="c_ve_com_tracking_model_Users_updated" readonly="true" required="true" z="user-managed"/>
+        <field:simple field="activationTokens" id="c_ve_com_tracking_model_Users_activationTokens" messageCode="entity_reference_not_managed" messageCodeAttribute="Activation Token" render="false" z="user-managed"/>
+        <field:simple field="detalleNotificacions" id="c_ve_com_tracking_model_Users_detalleNotificacions" messageCode="entity_reference_not_managed" messageCodeAttribute="Detalle Notificacion" render="false" z="user-managed"/>
+        <field:simple field="detalleRecepcions" id="c_ve_com_tracking_model_Users_detalleRecepcions" messageCode="entity_reference_not_managed" messageCodeAttribute="Detalle Recepcion" render="false" z="user-managed"/>
+        <field:simple field="estatusContenedors" id="c_ve_com_tracking_model_Users_estatusContenedors" messageCode="entity_reference_not_managed" messageCodeAttribute="Estatus Contenedor" render="false" z="user-managed"/>
+        <field:simple field="estatusGuias" id="c_ve_com_tracking_model_Users_estatusGuias" messageCode="entity_reference_not_managed" messageCodeAttribute="Estatus Guia" render="false" z="user-managed"/>
+        <field:simple field="estatusPaquetes" id="c_ve_com_tracking_model_Users_estatusPaquetes" messageCode="entity_reference_not_managed" messageCodeAttribute="Estatus Paquete" render="false" z="user-managed"/>
+        <field:simple field="guias" id="c_ve_com_tracking_model_Users_guias" messageCode="entity_reference_not_managed" messageCodeAttribute="Guia" render="false" z="user-managed"/>
+        <field:simple field="trackingLogs" id="c_ve_com_tracking_model_Users_trackingLogs" messageCode="entity_reference_not_managed" messageCodeAttribute="Tracking Log" render="false" z="user-managed"/>
+        <field:simple field="guias1" id="c_ve_com_tracking_model_Users_guias1" messageCode="entity_reference_not_managed" messageCodeAttribute="Guia" render="false" z="user-managed"/>
+        <field:simple field="reciboAlmacens" id="c_ve_com_tracking_model_Users_reciboAlmacens" messageCode="entity_reference_not_managed" messageCodeAttribute="Recibo Almacen" render="false" z="user-managed"/>
+        <field:simple field="reciboAlmacens1" id="c_ve_com_tracking_model_Users_reciboAlmacens1" messageCode="entity_reference_not_managed" messageCodeAttribute="Recibo Almacen" render="false" z="user-managed"/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_ve_com_tracking_model_Users" render="${not empty dependencies}" z="3qu0Y1DB6GGOgPaRaofUkFfiFTw="/>
+</div>

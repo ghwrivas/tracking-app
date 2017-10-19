@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.addOnLoad(function() {
+			dojo.byId('_email_id').focus();
+			dojo.byId('_email_id').select();
+		});
+
+		function validateOnSubmit(form) {
+			var valid = Spring.validateAll();
+			if (!valid) {
+				return false;
+			} else {
+				$("#proceed").attr("disabled", "disabled");
+				return true;
+			}
+		}
+	</script>	
+	<spring:message code="label_panel_reset_password" htmlEscape="false"
+		var="title" />
+	<util:panel id="title" title="${title}">
+		<form:form id="passwordResetForm" modelAttribute="passwordResetForm" cssClass=".submit-form" onsubmit="return validateOnSubmit(this);">
+		<field:input field="email" id="c_ve_com_tracking_model_Users_email" required="true"
+			validationMessageCode="field_invalid_email" z="user-managed" />
+			<field:captcha />
+			<div class="submit" id="passwordResetForm_submit">
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<spring:message code="button_submit" var="button_reset" />
+				<input id="proceed" type="submit"
+					value="${button_reset}" />
+				<span style="margin-left: 5px;"> </span>				
+				<field:cancel path="/login" label="button_cancel" />					
+			</div>			
+		</form:form>
+	</util:panel>
+</div>

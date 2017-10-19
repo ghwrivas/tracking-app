@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show delete="false" id="ps_ve_com_tracking_model_Countries" object="${countries}" path="/admin/countrieses" z="svKJIzOXh+VoEufp8APHVR/X7gY=">
+        <field:display field="name" id="s_ve_com_tracking_model_Countries_name" object="${countries}" z="v9zcCeM3pa/23tKgE+5TESGsEd0="/>
+        <field:display field="isoAlpha3" id="s_ve_com_tracking_model_Countries_isoAlpha3" object="${countries}" z="FjiS77uPkpgg+BHVYS0g5Kuuedg="/>
+        <field:display field="isoNumeric" id="s_ve_com_tracking_model_Countries_isoNumeric" object="${countries}" z="yyaGc4/jSJVINBDw0GAbpolMtxo="/>
+        <field:display field="currencyCode" id="s_ve_com_tracking_model_Countries_currencyCode" object="${countries}" z="eYdLC8xbPpCtEWwdYOkFBHxtVhI="/>
+        <field:display field="currencyName" id="s_ve_com_tracking_model_Countries_currencyName" object="${countries}" z="+Y1eXJjuDCjRvxlAVe01OTdnTxw="/>
+        <field:display field="currrencySymbol" id="s_ve_com_tracking_model_Countries_currrencySymbol" object="${countries}" z="SF1JnY/f70DDJaTh5FpgdC+Sn1k="/>
+        <field:display field="flag" id="s_ve_com_tracking_model_Countries_flag" object="${countries}" z="0TqwNMLa5GGLiM8koCgPRq8O6KY="/>
+        <field:display field="tipoCambio" id="s_ve_com_tracking_model_Countries_tipoCambio" object="${countries}" z="1bRJ6UouCED/47gsexR5uqfeFPU="/>
+    </page:show>
+</div>

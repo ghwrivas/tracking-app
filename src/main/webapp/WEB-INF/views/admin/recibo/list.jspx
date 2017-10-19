@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	<spring:message code="label_ve_com_tracking_model_reciboalmacen_plural" var="entity"></spring:message>
+	<spring:message code="label_ve_com_tracking_model_reciboalmacen_plural" var="title" htmlEscape="false"></spring:message>  
+    <util:panel id="pl_ve_com_tracking_model_ReciboAlmacen" title="${title}">
+		<util:search tipoEstatus="${tipoEstatus}"></util:search>
+        <c:choose>
+            <c:when test="${not empty recibos}">
+		        <table:table create="false" data="${recibos}" show="false" delete="false" id="l_ve_com_tracking_model_ReciboAlmacen" path="/admin/recibo" pathToPrint="/admin/mediaview/recibo/" pathToWebflow="/admin/webflow/recibo" update="false" webflow="true" z="user-managed">
+		            <table:column id="c_ve_com_tracking_model_reciboalmacen_numero" property="id"/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_cliente" property="cliente" z="mFVTPKuPuOlCCVT/rcLhXmeiEz4="/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_tipocargo" property="tipoCargo"/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_preciocargo" property="precioCargo" currency="true"/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_totalcargo" property="totalCargo" currency="true"/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_tipoTransportacion" property="tipoTransportacion" z="vCuyOfWwHg74xMvhX+rglgvc4F0="/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_creatorId" property="creatorId" z="eeWZ6P9Zt5WNPVTkktqRrsDT76w="/>
+		            <table:column id="c_ve_com_tracking_model_reciboalmacen_created" property="created"/>
+		            <table:column id="c_ve_com_tracking_model_reciboalmacen_estatus" property="estatus"/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_origen" property="origen" z="gQ41hVv0EfmfNWJo6H+QQa954Bo="/>
+		            <table:column id="c_ve_com_tracking_model_ReciboAlmacen_destino" property="destino" z="MiQX8+6ulSDI3ur2OEYaK+abWng="/>
+		        </table:table>
+	        </c:when>
+            <c:otherwise>
+                <spring:message arguments="${entity}" code="entity_not_found" htmlEscape="false"/>
+            </c:otherwise>
+        </c:choose>
+    </util:panel>
+</div>

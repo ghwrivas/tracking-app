@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_ve_com_tracking_model_Empresa" modelAttribute="empresa" path="/admin/empresa" versionField="none" z="jcEjQ0zCrgerTuqQkoh19+UfAVI=">
+        <field:input field="nombre" id="c_ve_com_tracking_model_Empresa_nombre" required="true" z="77+vGzevRnOA7IiwgNA0ayhxX6U="/>
+        <field:input field="direccion" id="c_ve_com_tracking_model_Empresa_direccion" required="true" z="XdruMOaCStu4a4SU7S0LMYvHXp8="/>
+        <field:input field="telefono" id="c_ve_com_tracking_model_Empresa_telefono" required="true" z="uVl2y4uTiy470mYy7jnEjUnHyFE="/>
+    </form:update>
+</div>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_ve_com_tracking_model_TipoEmbalaje" modelAttribute="tipoEmbalaje" path="/admin/tipoembalaje" render="${empty dependencies}" z="DIgxbScP0pOGsx9vJwYvO1yli7o=">
+        <field:input field="nombre" id="c_ve_com_tracking_model_TipoEmbalaje_nombre" required="true" z="MvAme7O1E0qIiMIdurSb+P811IM="/>
+        <field:simple field="guias" id="c_ve_com_tracking_model_TipoEmbalaje_guias" messageCode="entity_reference_not_managed" messageCodeAttribute="Guia" render="false" z="user-managed"/>
+        <field:input field="largo" id="c_ve_com_tracking_model_TipoEmbalaje_largo" required="true" validationMessageCode="field_invalid_number" z="45sySA4V6q16GfJOS3pj3SNuGf8="/>
+        <field:input field="ancho" id="c_ve_com_tracking_model_TipoEmbalaje_ancho" required="true" validationMessageCode="field_invalid_number" z="AGFMpzynOoeMRIEMNcaW8Sr7kF0="/>
+        <field:input field="alto" id="c_ve_com_tracking_model_TipoEmbalaje_alto" required="true" validationMessageCode="field_invalid_number" z="6xFtltdIWugMFG2+Psk5Qbc2jDQ="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_ve_com_tracking_model_TipoEmbalaje" render="${not empty dependencies}" z="W/HluIcK5wGPfr+nPnHGMUpOSTE="/>
+</div>

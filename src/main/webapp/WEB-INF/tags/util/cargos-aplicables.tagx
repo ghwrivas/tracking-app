@@ -1,0 +1,35 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<table>
+		<thead>
+			<tr>
+			<th colspan="4">Cargos Aplicables</th>
+			</tr>
+			<tr>
+			<th>Precio del cargo</th>		
+			<th>Sub Total</th>
+			<th>Descuento</th>
+			<th>Total Cargo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><fmt:formatNumber value="${recibo.precioCargo}"
+						maxFractionDigits="2" minFractionDigits="2" /></td>			
+				<td><fmt:formatNumber value="${recibo.totalCargoSinDescuento}"
+						maxFractionDigits="2" minFractionDigits="2" /></td>
+				<td><fmt:formatNumber value="${recibo.totalDescuento}"
+						maxFractionDigits="2" minFractionDigits="2" /></td>
+				<td><fmt:formatNumber value="${recibo.totalCargoConDescuento}"
+						maxFractionDigits="2" minFractionDigits="2" /></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

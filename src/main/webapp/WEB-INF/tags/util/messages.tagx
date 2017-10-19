@@ -1,0 +1,73 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<div id="messages">
+		<c:choose>
+			<c:when test="${not empty messageError}">
+				<div class="errors-custom">
+					<h3>${messageError}</h3>
+				</div>
+				<br />
+			</c:when>
+			<c:otherwise>
+				<c:if test="${not empty param.messageError}">
+					<div class="errors-custom">
+						<h3>${param.messageError}</h3>
+					</div>
+					<br />
+				</c:if>
+
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${not empty messageSuccess}">
+				<div class="success">
+					<h3>${messageSuccess}</h3>
+				</div>
+				<br />
+			</c:when>
+			<c:otherwise>
+				<c:if test="${not empty param.messageSuccess}">
+					<div class="success">
+						<h3>${param.messageSuccess}</h3>
+					</div>
+					<br />
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${not empty messageWarning}">
+				<div class="warning">
+					<h3>${messageWarning}</h3>
+				</div>
+				<br />
+			</c:when>
+			<c:otherwise>
+				<c:if test="${not empty param.messageWarning}">
+					<div class="warning">
+						<h3>${param.messageWarning}</h3>
+					</div>
+					<br />
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${not empty messageInfo}">
+				<div class="info">
+					<h3>${messageInfo}</h3>
+				</div>
+				<br />
+			</c:when>
+			<c:otherwise>
+				<c:if test="${not empty param.messageInfo}">
+					<div class="info">
+						<h3>${param.messageInfo}</h3>
+					</div>
+					<br />
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</jsp:root>

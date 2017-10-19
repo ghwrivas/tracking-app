@@ -1,0 +1,256 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_panel_title_visualizar_info_paquete" htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+
+		<div id="tracking">
+			<label for="_tracking_id"> <spring:message
+					code="label_ve_com_tracking_model_notify_tracking" /> 
+			</label>
+			<div class="box" id="_tracking_id" style="font-size: xx-large;">
+				${paquete.tracking}</div>
+		</div>
+		<br />
+
+		<div id="estatus">
+			<label for="_estatus_id"> <spring:message
+					code="label_ve_com_tracking_secuence_status" /> 
+			</label>
+			<div class="box" id="_estatus_id" style="font-size: xx-large;">
+				<spring:url var="line" value="/resources/images/line.png" />
+				<ul class="list-horizontal">
+					<c:set value="0" var="paso"></c:set>
+					<c:forEach items="${allEstatus}" var="estatus" varStatus="theCount">
+
+						<c:choose>
+							<c:when test="${paso == '1'}">
+
+								<c:if test="${estatus == 'NOTIFICADO'}">
+									<spring:url var="image"
+										value="/resources/images/notificado-gris.png" />
+								</c:if>
+								<c:if test="${estatus == 'CONFIRMADO'}">
+									<spring:url var="image"
+										value="/resources/images/confirmado-gris.png" />
+								</c:if>
+								<c:if test="${estatus == 'NOTIFICADO_CONFIRMADO'}">
+									<spring:url var="image"
+										value="/resources/images/notificado-confirmado-gris.png" />
+								</c:if>
+								<c:if test="${estatus == 'PROCESADO'}">
+									<spring:url var="image"
+										value="/resources/images/procesado-gris.png" />
+								</c:if>
+							</c:when>
+							<c:otherwise>
+
+								<c:if test="${estatus == 'NOTIFICADO'}">
+									<spring:url var="image"
+										value="/resources/images/notificado-color.png" />
+								</c:if>
+								<c:if test="${estatus == 'CONFIRMADO'}">
+									<spring:url var="image"
+										value="/resources/images/confirmado-color.png" />
+								</c:if>
+								<c:if test="${estatus == 'NOTIFICADO_CONFIRMADO'}">
+									<spring:url var="image"
+										value="/resources/images/notificado-confirmado-color.png" />
+								</c:if>
+								<c:if test="${estatus == 'PROCESADO'}">
+									<spring:url var="image"
+										value="/resources/images/procesado-color.png" />
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						<li><img src="${image}" /></li>
+						<c:if test="${estatus != 'PROCESADO'}">
+							<li style="width: 20px; padding: 20px;"><img src="${line}" />
+							</li>
+						</c:if>
+						<c:if test="${paquete.estatus == estatus}">
+							<c:set var="paso" value="1"></c:set>
+						</c:if>
+					</c:forEach>
+				</ul>
+
+			</div>
+		</div>
+		<br />
+
+<div style="overflow: auto;">
+		<div id="detalles_recepcion" style="float: left; width: 30%;">
+			<label for="detalles_recepcion_id" style="width: 200px;"> <spring:message
+						code="label_package_details_notification" />
+			</label> <br /><br />
+			<div class="box" id="detalles_recepcion_id">
+				<label for="detalles_recepcion_id"> <spring:message code="label_notification_date"
+							var="notification_date" htmlEscape="false"></spring:message> <c:out
+							value="${notification_date} " />
+				</label>:
+<fmt:formatDate
+							value="${paquete.detalleNotificacion.created.time}"
+							pattern="${detallerecepcions_created_date_format}" />
+				<br />
+
+			</div>
+			<br />
+
+			<div class="box" id="label_recepcioned_by">
+				<label for="label_recepcioned_by"><spring:message
+							code="label_ve_com_tracking_model_guia_cliente" />
+				</label>:
+${paquete.detalleNotificacion.usersId.firstName}
+						${paquete.detalleNotificacion.usersId.lastName}
+				<br />
+
+			</div>
+
+			<br />
+
+			<div class="box" id="label_ve_com_tracking_model_notify_descripcion">
+				<label for="label_ve_com_tracking_model_notify_descripcion">
+<spring:message
+							code="label_ve_com_tracking_model_notify_secured"
+							var="label_asegurado"></spring:message> <c:out
+							value="${label_asegurado}" />
+				</label>: ${paquete.labelAsegurar} <br />
+
+			</div>
+			
+			<br />
+
+			<div class="box" id="label_ve_com_tracking_model_notify_descripcion">
+				<label for="label_ve_com_tracking_model_notify_descripcion">
+<spring:message
+							code="label_ve_com_tracking_model_notify_descripcion" />
+				</label>: ${paquete.detalleNotificacion.descripcion} <br />
+
+			</div>			<br/>		<br/>			
+
+		</div>
+		
+		<div id="detalles Notificacion" style="float: right; width: 58%;">
+			<label for="detalles_recepcion_id"> <spring:message
+					code="label_package_details_recepcion" />
+			</label> <br /><br />
+			<div class="box" id="detalles_recepcion_id">
+				<label for="detalles_recepcion_id"> <spring:message
+						code="label_recepcion_date" var="recepcion_date"
+						htmlEscape="false"></spring:message> <c:out
+						value="${recepcion_date} " />
+				</label>:
+				<fmt:formatDate value="${paquete.detalleRecepcion.created.time}"
+					pattern="${detallerecepcions_created_date_format}" />
+				<br />
+
+			</div>
+			<br />
+
+			<div class="box" id="label_recepcioned_by">
+				<label for="label_recepcioned_by"> <spring:message
+						code="label_recepcioned_by"></spring:message>
+				</label>:
+				<c:out
+					value="${paquete.detalleRecepcion.usersId.firstName} ${paquete.detalleRecepcion.usersId.lastName}" />
+				<br />
+
+			</div>
+
+			<br />
+
+			<div class="box" id="label_ve_com_tracking_model_notify_descripcion">
+				<label for="label_ve_com_tracking_model_notify_descripcion">
+					<spring:message
+						code="label_ve_com_tracking_model_notify_descripcion" />
+				</label>: ${paquete.detalleRecepcion.descripcion} <br />
+
+			</div>
+		</div>	
+		
+			<br/>		<br/>	
+</div>
+		
+	<br/>		<br/>
+
+
+		<div id="label_sub_packages_generatesdiv">
+			<label for="label_sub_packages_generates"> <spring:message
+					code="label_sub_packages_generates" />
+			</label>	<br/>		<br/>
+			<div class="box" id="label_sub_packages_generates">
+			
+		<c:choose>
+			<c:when test="${not empty guias}">
+				<table style="width: 70%; margin-left: 20px;">
+					<thead>
+						<tr>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_numero"></spring:message></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_notify_descripcion"></spring:message>
+							</th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_estatus"></spring:message></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_contenedor_created"></spring:message></th>
+							<th><spring:message code="label_current_status_date"></spring:message>
+							</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${guias}" var="guia">
+							<tr>
+								<td>${guia.id.codigo}</td>
+								<td>${guia.id.detalle}</td>
+								<td>${guia.id.estatus}</td>
+								<td><fmt:formatDate value="${guia.id.fechaCreacion.time}"
+										pattern="${detallerecepcions_created_date_format}" /></td>
+								<td><fmt:formatDate
+										value="${guia.id.fechaUltimoEstatus.time}"
+										pattern="${detallerecepcions_created_date_format}" /></td>
+
+								<td class="utilbox"><spring:message
+										code="label_ve_com_tracking_model_guias" var="producto_label" />
+									<spring:message code="entity_show"
+										arguments="${producto_label}" var="title" /> <spring:url
+										value="/admin/guia/show" var="url">
+										<spring:param name="codigo" value="${guia.id.codigo}" />
+									</spring:url> <spring:url value="/resources/images/show.png"
+										var="show_image_url" /> <spring:message
+										code="label_view_info_package" var="view_package" /> <a
+									href="${url}" title="Ver"> <img alt="${view_package}"
+										class="image" src="${show_image_url}" title="${view_package}" />
+								</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<spring:message code="label_not_sub_packages_finded_for_package" />
+			</c:otherwise>
+		</c:choose>			
+			</div>
+		</div>
+		<br />
+
+
+
+		
+		
+		
+		
+		
+
+	</util:panel>
+</div>

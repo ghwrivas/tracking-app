@@ -1,0 +1,187 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:url value="" var=""></spring:url>
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_recibo_shipping_data"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+			<form:form modelAttribute="recibo" id="recibo" cssClass=".submit-form" method="POST"
+				onsubmit="return validateOnSubmit(this);">
+				
+			<div style="width: 100%; height: inherit; overflow: hidden;">
+				<util:confirm-submit select="tipoTransportacion"
+					focus="tipoTransportacion" submit="save" confirm="true"></util:confirm-submit>
+				<div style="width: 45%; float: left; margin-right: 1px;">				
+					<spring:message
+						code="label_ve_com_tracking_model_guia_tipotransportacion"
+						var="label_transportation" htmlEscape="false"></spring:message>
+					<form:label path="tipoTransportacion" for="tipoTransportacion">${label_transportation}:</form:label>
+					<form:select id="tipoTransportacion" path="tipoTransportacion">
+						<form:option value=""></form:option>
+						<c:forEach items="${transportacion}" var="item">
+							<form:option value="${item}" />
+						</c:forEach>
+					</form:select>
+					<form:errors path="tipoTransportacion" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'tipoTransportacion',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 1
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message code="label_ve_com_tracking_model_guia_origen"
+						var="label_origin" htmlEscape="false"></spring:message>
+					<form:label path="origen" for="origen">${label_origin}:</form:label>
+					<form:select id="origen" path="origen">
+						<form:option value=""></form:option>
+						<c:forEach items="${destinos}" var="item">
+							<c:choose>
+								<c:when test="${recibo.origen.id == item.id}">
+									<form:option value="${item.id}" label="${item.ciudad}"
+										selected="true" />
+								</c:when>
+								<c:otherwise>
+									<form:option value="${item.id}" label="${item.ciudad}" />
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</form:select>
+					<form:errors path="origen" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'origen',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 3
+							}
+						}));
+					</script>
+					<br /> <br />
+
+					<spring:message code="label_ve_com_tracking_model_guia_destino"
+						var="label_destino" htmlEscape="false"></spring:message>
+					<form:label path="destino" for="destino">${label_destino}:</form:label>
+					<form:select id="destino" path="destino">
+						<form:option value=""></form:option>
+						<c:forEach items="${destinos}" var="item">
+							<c:choose>
+								<c:when test="${recibo.destino.id == item.id}">
+									<form:option value="${item.id}" label="${item.ciudad}"
+										selected="true" />
+								</c:when>
+								<c:otherwise>
+									<form:option value="${item.id}" label="${item.ciudad}" />
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</form:select>
+					<form:errors path="destino" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'destino',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 4
+							}
+						}));
+					</script>
+					<br /> <br />				
+				</div>
+				
+				<div style="width: 50%; float: right;">
+					<spring:message code="label_ve_com_tracking_model_guia_preciocargo"
+						var="label_shipping_charges" htmlEscape="false"></spring:message>
+					<form:label path="precioCargo" for="precioCargo">${label_shipping_charges}:</form:label>
+					<form:input path="precioCargo" cssStyle="width: 15%;"
+						placeholder="precioCargo"></form:input>
+					<form:errors path="precioCargo" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "precioCargo",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 9
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message code="label_ve_com_tracking_model_guia_descuento"
+						var="label_descuento" htmlEscape="false"></spring:message>
+					<form:label path="descuento" for="descuento">${label_descuento}:</form:label>
+					<form:input path="descuento" cssStyle="width: 15%;"
+						placeholder="descuento"></form:input>
+					<form:errors path="descuento" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "descuento",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 10
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message code="label_ve_com_tracking_model_guia_tipocargo"
+						var="label_tipo_cargo" htmlEscape="false"></spring:message>
+					<form:label path="tipoCargo" for="tipoCargo">${label_tipo_cargo}:</form:label>
+					<form:select id="tipoCargo" path="tipoCargo" items="${cargos}">
+					</form:select>
+					<form:errors path="tipoCargo" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'tipoCargo',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 11
+							}
+						}));
+					</script>
+					<br /> <br />
+				
+				</div>
+			</div>				
+
+		<util:guias-recibo delete="false" />		
+				<br />
+				<div class="submit-web-flow">
+					<spring:message var="save" code="button_aceptar" htmlEscape="false" />
+					<input type="submit" id="save" tabindex="12" name="save"
+						value="${fn:escapeXml(save)}" />
+						<span style="margin-left: 5px;"> </span>
+					<spring:message var="cancel" code="button_cancel"
+						htmlEscape="false" />
+					<input type="submit" id="cancel" name="cancel"
+						value="${fn:escapeXml(cancel)}" tabindex="13" />
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ValidateAllDecoration({
+							elementId : 'save',
+							event : 'onclick'
+						}));
+					</script>
+				</div>
+			</form:form>
+
+	</util:panel>
+</div>

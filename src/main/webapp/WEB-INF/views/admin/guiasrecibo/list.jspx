@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_ve_com_tracking_model_GuiaReciboAlmacen" items="${guiareciboalmacens}" z="4DMmaIWf0CITurw9BEgz+qmNzIw=">
+        <table:table data="${guiareciboalmacens}" id="l_ve_com_tracking_model_GuiaReciboAlmacen" path="/admin/guiasrecibo" z="iraSo1Y0dumpkj24Gwx44TA1M54=">
+            <table:column id="c_ve_com_tracking_model_GuiaReciboAlmacen_guiaId" property="guiaId" z="98aM13gLR4pHWzZ2y6X+RNAZy+M="/>
+            <table:column id="c_ve_com_tracking_model_GuiaReciboAlmacen_reciboAlmacenId" property="reciboAlmacenId" z="edCERWhOPvOGFvronJvn+avNs68="/>
+        </table:table>
+    </page:list>
+</div>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="label_ve_com_tracking_model_guias_plural" var="entity"
+		htmlEscape="false" />
+	<spring:message code="label_ve_com_tracking_model_guias_plural"
+		var="title" htmlEscape="false" />
+	<util:panel title="${title}" id="pl_ve_com_tracking_model_paquetes">
+		<util:search tipoEstatus="${tipoEstatus}" />
+		<c:choose>
+			<c:when test="${not empty guias}">
+				<table>
+					<thead>
+						<tr>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_numero" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_trackings" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_detalles" /></th>
+						<th><spring:message
+									code="label_ve_com_tracking_model_guia_estatus" /></th>
+							<th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${guias}" var="guia">
+						<tr>
+							<td>${guia.id.codigo}</td>
+							<td>${guia.id.trackings}</td>
+							<td>${guia.id.detalle}</td>
+							<td>${guia.id.estatus}</td>
+							<td class="utilbox"><spring:url value="/admin/guia/show"
+									var="url">
+									<spring:param name="codigo" value="${guia.id.codigo}" />
+								</spring:url> <spring:url value="/resources/images/show.png"
+									var="show_image_url" /> <spring:message
+									code="label_view_info_package" var="view_package" /> <a
+								href="${url}" alt="${view_package}" title="${view_package}">
+									<img alt="${view_package}" class="image"
+									src="${show_image_url}" title="${view_package}" />
+							</a></td>
+						</tr>
+					</c:forEach>
+
+				</table>
+				<c:if test="${not empty maxPages}">
+					<util:pagination maxPages="${maxPages}" page="${param.page}"
+						size="${param.size}" searchString="${param.searchString}" />
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<spring:message arguments="${entity}" code="entity_not_found"
+					htmlEscape="false" />
+			</c:otherwise>
+		</c:choose>
+	</util:panel>
+</div>

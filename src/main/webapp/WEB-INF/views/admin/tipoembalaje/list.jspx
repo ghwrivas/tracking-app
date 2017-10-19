@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_ve_com_tracking_model_TipoEmbalaje" items="${tipoembalajes}" z="wc87LGv9ym5sQENXS4RJJWw01us=">
+        <table:table data="${tipoembalajes}" id="l_ve_com_tracking_model_TipoEmbalaje" path="/admin/tipoembalaje" z="oWhG2RNC0Jxk7NLTz+Pxu5Ju1IQ=">
+            <table:column id="c_ve_com_tracking_model_TipoEmbalaje_nombre" property="nombre" z="o2iYVObH35Y2brOnQWCw24SwhSY="/>
+            <table:column id="c_ve_com_tracking_model_TipoEmbalaje_largo" property="largo" z="TnxiI+Rtt9LeohUQpvmURuOnDVY="/>
+            <table:column id="c_ve_com_tracking_model_TipoEmbalaje_ancho" property="ancho" z="j0bxdplZdr+eLcdyD+TtU5SQFv8="/>
+            <table:column id="c_ve_com_tracking_model_TipoEmbalaje_alto" property="alto" z="JfFNBFXH1YRfwMK6llhFdlYhhTU="/>
+        </table:table>
+    </page:list>
+</div>

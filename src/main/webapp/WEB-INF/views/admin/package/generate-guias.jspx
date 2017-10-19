@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_guia_select_client"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<form action="" method="GET">
+			<util:confirm-submit select="searchString" focus="searchString"
+				submit="buscar" confirm="false"></util:confirm-submit>
+			<input type="hidden" name="page" value="1" /> <input type="hidden"
+				name="size" value="10" /> <input type="text" id="searchString"
+				name="searchString" /> <input type="submit" name="buscar"
+				class="submit" value="Buscar" />
+		</form>
+		<c:choose>
+			<c:when test="${not empty users}">
+				<table>
+					<thead>
+						<tr>
+							<th><spring:message
+									code="label_ve_com_tracking_model_users_username"
+									htmlEscape="false" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_users_firstname"
+									htmlEscape="false"></spring:message></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_users_lastname"
+									htmlEscape="false" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_users_email"
+									htmlEscape="false"></spring:message></th>
+							<th><spring:message code="label_total_packages"
+									htmlEscape="false" /></th>
+							<th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${users}" var="user">
+						<tr>
+							<td>${user.id.username}</td>
+							<td>${user.id.firstName}</td>
+							<td>${user.id.lastName}</td>
+							<td>${user.id.email}</td>
+							<td>${user.id.total}</td>
+							<td class="utilbox"><spring:url value="/admin/webflow/guia" var="url_flow">
+									<spring:param name="user" value="${user.id.id}" />
+								</spring:url> <spring:url value="/resources/images/flow.png"
+									var="show_image_url_flow" /> <spring:message text="Procesar"
+									var="flow_guia" /> <a href="${url_flow}" alt="${flow_guia}"
+								title="${flow_guia}"> <img alt="${flow_guia}" class="image"
+									src="${show_image_url_flow}" title="${flow_guia}" />
+
+							</a></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<util:pagination maxPages="${maxPages}" page="${param.page}"
+					size="${param.size}" searchString="${param.searchString}" />
+			</c:when>
+			<c:otherwise>
+				<p>
+					<spring:message
+						code="label_not_client_with_packages_notified_confirmed"
+						htmlEscape="false" />
+				</p>
+			</c:otherwise>
+		</c:choose>
+	</util:panel>
+</div>

@@ -1,0 +1,230 @@
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-05 11:11:01
+project --topLevelPackage ve.com.tracking --projectName tracking-app --java 7 --packaging WAR
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-05 11:11:14
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-05 11:11:18
+hint 
+jpa setup --database MYSQL --provider HIBERNATE --databaseName tracking_db --hostName localhost --userName root
+// [failed] database introspect --schema unable-to-obtain-connection 
+osgi obr url add --url http://spring-roo-repository.springsource.org/repository.xml
+osgi obr start --bundleSymbolicName org.springframework.roo.wrapping.mysql-connector-java
+osgi obr url remove --url http://spring-roo-repository.springsource.org/repository.xml
+addon install id --searchResultId 01
+database introspect --schema unable-to-obtain-connection 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+repository jpa --entity ~.model.Users --interface ~.repository.UsersRepository
+database introspect --schema unable-to-obtain-connection 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+database introspect --schema unable-to-obtain-connection 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --excludeTables table_example
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically false --excludeTables table_example
+web mvc setup
+service type --entity ~.model.Authority --interface ~.services.AuthorityService
+repository jpa --entity ~.model.Authority --interface ~.repository.AuthorityRepository
+service type --entity ~.model.Authority --interface ~.services.AuthorityService
+web mvc scaffold --backingType ~.model.Authority --class ~.web.AuthorityController --path /admin/authority
+database introspect --schema unable-to-obtain-connection 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+service type --entity ~.model.Authoritys --interface ~.services.AuthorityService
+web mvc scaffold --backingType ~.model.Authoritys --class ~.web.AuthorityController --path /admin/authorityes
+web mvc update tags 
+web mvc scaffold --backingType ~.model.Authorities  --class ~.web.AuthoritiesController --path /admin/authorities
+web mvc scaffold --backingType ~.model.Users  --class ~.web.UsersController --path /admin/users
+service type --entity ~.model.Users ----interface ~.services.UsersService
+repository jpa --entity ~.model.Authorities --interface ~.repository.AuthoritiesRepository
+web mvc scaffold --backingType ~.model.Authorities  --class ~.web.AuthoritiesController --path /admin/authorities
+web mvc scaffold --backingType ~.model.Users  --class ~.web.UsersController --path /admin/users
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-05 16:01:10
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-06 08:32:09
+// [failed] database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+web mvc scaffold --backingType ~.model.EmpresaEnvio  --class ~.web.EmpresaEnvioController --path /admin/empresaenvio
+repository jpa --entity ~.model.EmpresaEnvio --interface ~.repository.EmpresaEnvioRepository
+web mvc scaffold --backingType ~.model.EmpresaEnvio  --class ~.web.EmpresaEnvioController --path /admin/empresaenvio
+web flow
+security setup
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-06 16:09:07
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-06 19:37:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-06 23:33:28
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-07 10:57:41
+// [failed] service secure type --entity ~.model.Users --interface ~.services.UsersSecureService
+service type --entity ~.model.Users --interface ~.services.AnotherUserService
+controller class --class ~.web.AccountController --preferredMapping /account
+web mvc scaffold --backingType ~.forms.AccountCreateForm  --class ~.web.AccountController --path /account
+repository jpa --entity ~.forms.AccountCreatedForm --interface ~.repository.TestRepository
+web mvc scaffold --backingType ~.forms.AccountCreateForm  --class ~.web.AccountController --path /account
+web mvc scaffold --backingType ~.forms.AccountCreateForm  --class ~.web.Account2Controller --path /account
+web mvc scaffold --backingType ~.forms.AccountCreateForm  --class ~.web.AccountssController --path /accountss
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-07 14:53:08
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-08 19:13:08
+controller class --class ~.web.PasswordController  --preferredMapping /password
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-10 07:01:55
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-10 12:31:32
+repository jpa --entity ~.model.ActivationToken --interface ~.repository.ActivationTokenRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-10 14:10:36
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-10 14:49:28
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-10 15:35:51
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-10 19:39:15
+controller class --class ~.web.HomeController  --preferredMapping /home
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-11 06:29:27
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-11 09:48:22
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-11 15:12:53
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-12 15:08:04
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-12 15:49:07
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-12 21:29:58
+controller class --class ~.web.ClientPackageController  --preferredMapping /client/package
+repository jpa --entity ~.model.DetalleNotificacion --interface ~.repository.DetalleNotificacionRepository
+repository jpa --entity ~.model.Paquete --interface ~.repository.PaqueteRepository
+service type --entity ~.model.Paquete --interface ~.services.PaqueteService
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-13 06:49:09
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-13 09:33:28
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-13 09:34:30
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-13 11:16:38
+repository jpa --entity ~.model.DetalleRecepcion --interface ~.repository.DetalleRecepcionRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-13 15:42:39
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-13 22:27:53
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-14 06:42:22
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-14 09:11:15
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-14 11:09:29
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-19 22:24:46
+// [failed] database introspect --schema unable-to-obtain-connection
+osgi install --url C:\\user\\jdbc
+osgi scr config
+osgi scr list
+osgi install --url file:\\user\\jdbc
+osgi install --url file:\\C:\\user\\jdbc
+osgi install --url file
+addon install bundle --bundleSymbolicName org.springframework.roo.wrapping.mysql-connector-java
+osgi install --url file:\\\C:/Users/williams/Downloads/mysql-connector-java-5.1.19-bin.jar
+database introspect --schema unable-to-obtain-connection
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true
+hint
+// [failed] repository jpa --entity ~.model.EstatusContenedor --interface ~.repository.EstatusContenedorRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-20 22:03:16
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-20 22:07:23
+repository jpa --entity ~.model.EstatusContenedor --interface ~.repository.EstatusContenedorRepository
+repository jpa --entity ~.model.EstatusPaquete --interface ~.repository.EstatusPaqueteRepository
+repository jpa --entity ~.model.EstatusGuia --interface ~.repository.EstatusGuiaRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-21 05:48:18
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-26 10:51:32
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-27 09:11:48
+database introspect --schema no-schema-required
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+database introspect --schema no-schema-required
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-27 15:45:01
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-29 15:50:58
+repository jpa --entity ~.model.CategoriaDetalle --interface ~.repository.CategoriaDetalleRepository
+repository jpa --entity ~.model.TipoEmbalaje --interface ~.repository.TipoEmbalajeRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-31 06:40:20
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-31 22:58:36
+repository jpa --entity ~.model.Destinos --interface ~.repository.DestinosRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-01 06:29:55
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-01 13:47:03
+repository jpa --entity ~.model.Guia --interface ~.repository.GuiaRepository
+service type --entity ~.model.Guia --interface ~.services.GuiaService
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-01 15:49:01
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-01 18:56:52
+repository jpa --entity ~.model.DetalleItem --interface ~.repository.DetalleItemRepository
+repository jpa --entity ~.model.DetalleGuia --interface ~.repository.DetalleGuiaRepository
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-02 11:53:31
+web mvc scaffold --backingType ~.model.Contenedor  --class ~.web.ContenedorController --path /admin/contenedor
+repository jpa --entity ~.model.Contenedor --interface ~.repository.ContenedorRepository
+service type --entity ~.model.Contenedor --interface ~.services.ContenedorService
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-02 15:54:10
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-03 11:27:37
+repository jpa --entity ~.model.GuiaContenedor --interface ~.repository.GuiaContenedorRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-03 15:47:41
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-04 09:45:55
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-04 14:51:47
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-09 11:07:10
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-09 15:43:19
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-10 14:58:57
+web mvc controller --class ~.web.ClientGuiaController --preferredMapping /client/guia
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-10 15:54:04
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-14 12:22:07
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+web mvc language --code es
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-14 16:59:25
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-15 09:07:23
+repository jpa --entity ~.model.Empresa --interface ~.repository.EmpresaRepository
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-15 15:26:25
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-16 11:12:52
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-17 08:27:06
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-22 09:01:48
+hint
+web mvc scaffold --backingType ~.model.TipoCambio  --class ~.web.TipoCambioController --path /admin/tipocambio
+web mvc scaffold --backingType ~.model.TipoEmbalaje  --class ~.web.TipoEmbalajeController --path /admin/tipoembalaje
+web mvc scaffold --backingType ~.model.Empresa  --class ~.web.EmpresaController --path /admin/empresa
+web mvc scaffold --backingType ~.model.Destinos  --class ~.web.DestinosController --path /admin/destinos
+repository jpa --entity ~.model.TipoCambio --interface ~.repository.TipoCambioRepository
+repository jpa --entity ~.model.TipoEmbalaje --interface ~.repository.TipoEmbalajeRepository
+service type --entity ~.model.TipoCambio --interface ~.services.TipoCambioService
+service type --entity ~.model.TipoEmbalaje --interface ~.services.TipoEmbalajeService
+service type --entity ~.model.Destinos --interface ~.services.DestinosService
+service type --entity ~.model.Empresa --interface ~.services.EmpresaService
+repository jpa --entity ~.model.Countries --interface ~.repository.CountriesRepository
+service type --entity ~.model.Countries --interface ~.services.CountriesService
+web mvc scaffold --backingType ~.model.Countries --class ~.web.CountriesController --path /admin/countrieses --disallowedOperations delete
+service type --entity ~.model.Countries --interface ~.services.CountriesService
+web mvc scaffold --backingType ~.model.Countries --class ~.web.CountriesController --path /admin/countrieses --disallowedOperations delete
+web mvc scaffold --backingType ~.model.Guia --class ~.web.GuiaController --path /admin/guia --disallowedOperations delete
+database introspect --schema no-schema-required
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-22 15:53:22
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-24 10:22:53
+database introspect --schema no-schema-required
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+database introspect --schema no-schema-required
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-24 15:40:18
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-25 07:36:37
+database introspect --schema no-schema-required
+database reverse engineer --schema no-schema-required --activeRecord false --package ~.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-25 09:09:38
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-29 19:56:27
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-04-30 06:00:40
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-05-07 13:08:03
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-05-07 15:00:55
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-05-11 17:11:38
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-05-12 00:43:32
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-05-31 06:50:59
+database introspect --schema no-schema-required 
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-06-01 21:08:13
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-06-08 10:24:44
+repository jpa --entity ~.model.GuiaReciboAlmacen --interface ~.repository.GuiaReciboAlmacenRepository
+repository jpa --entity ~.model.ReciboAlmacen --interface ~.repository.ReciboAlmacenRepository
+service type --entity ~.model.ReciboAlmacen --class ~.services.ReciboServiceImpl --interface ~.services.ReciboService
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-06-08 10:49:15
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-06-08 11:56:21
+web mvc scaffold --backingType ~.model.GuiaReciboAlmacen --class ~.web.GuiaReciboAlmacenController --path /admin/guiasrecibo
+web mvc scaffold --backingType ~.model.ReciboAlmacen --class ~.web.ReciboAlmacenController --path /admin/recibo
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-06-08 12:12:54
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-06-14 09:41:03
+hint
+database reverse engineer --schema no-schema-required --activeRecord false --package ve.com.tracking.model --testAutomatically true --enableViews true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-06-14 11:04:51
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-07-09 07:58:04
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-07-09 15:58:53
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-07-28 07:15:46
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-07-28 07:16:00

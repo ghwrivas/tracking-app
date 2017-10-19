@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_ve_com_tracking_model_Users" object="${users}" path="/admin/users" z="Qf3OhiIwHjjai/bFfikV3enBjQU=">
+        <field:display field="username" id="s_ve_com_tracking_model_Users_username" object="${users}" z="GFglC1fTxcJfzdGgCChFtnHzxwo="/>
+		<field:display field="ciRifPassport" id="s_ve_com_tracking_model_Users_ciRifPassport" object="${users}" z="z7ney8nwCFX6v1m0oc6bjlV3CIA="/>
+        <field:display field="password" id="s_ve_com_tracking_model_Users_password" object="${users}" render="false" z="user-managed"/>
+        <field:display field="enabled" id="s_ve_com_tracking_model_Users_enabled" object="${users}" z="X0dvz91OO0imEAcxoxoGLkt/qAw="/>
+        <field:display field="firstName" id="s_ve_com_tracking_model_Users_firstName" object="${users}" z="0CQwaGt/TH+EaAaT+4S3B67XH70="/>
+        <field:display field="lastName" id="s_ve_com_tracking_model_Users_lastName" object="${users}" z="a/MNfh1Nn3fEklBYo+7jO5UsrRg="/>
+        <field:display field="direccion" id="s_ve_com_tracking_model_Users_direccion" object="${users}" z="d1imsqx6R+ECvGuFNMP6zdTWOVg="/>
+        <field:display field="email" id="s_ve_com_tracking_model_Users_email" object="${users}" z="TRGQH83rzj/OYH7IhGR/HqGenZU="/>
+        <field:display field="telefono" id="s_ve_com_tracking_model_Users_telefono" object="${users}" z="HHVX//1zI7/LxItLHRRqV/sEyBg="/>
+        <field:display field="bbPin" id="s_ve_com_tracking_model_Users_bbPin" object="${users}" z="63pRYo/tIP4p9KxKItGGMbV7wAM="/>
+        <field:display calendar="true" dateTimePattern="${users_created_date_format}" field="created" id="s_ve_com_tracking_model_Users_created" object="${users}" z="ixxZ1aYnggbmNkdECwtoldaT8iE="/>
+        <field:display calendar="true" dateTimePattern="${users_updated_date_format}" field="updated" id="s_ve_com_tracking_model_Users_updated" object="${users}" z="Ssuv2Yu59y2SamN74DDR+t0FYRs="/>        
+    </page:show>
+ </div>

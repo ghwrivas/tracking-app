@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+		<spring:message code="confirm_save_changes" var="confirm_message" htmlEscape="false" />
+	<script type="text/javascript">
+		dojo.addOnLoad(function() {
+			dojo.byId('_currentPassword_id').focus();
+			dojo.byId('_currentPassword_id').select();
+		});
+
+		function validateOnSubmit(form) {
+			var valid = Spring.validateAll();
+			if (!valid) {
+				return false;
+			} else {
+				if (confirm('${confirm_message}')) {
+					$("#proceed").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}	
+			}
+		}
+	</script>
+	<spring:message code="label_title_panel_change_password" var="title"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<form:form id="passwordChangeForm" method="POST" cssClass=".submit-form"
+			modelAttribute="passwordChangeForm"
+			onsubmit="return validateOnSubmit(this);">
+			<form:hidden path="id" />
+			<field:input field="currentPassword" type="password"
+				id="c_ve_com_tracking_model_Users_password_current" required="true"
+				z="user-managed" />
+
+			<field:input field="newPassword" type="password"
+				id="c_ve_com_tracking_model_Users_password_new" required="true"
+				z="user-managed" />
+
+			<field:input field="confirmNewPassword" type="password"
+				id="c_ve_com_tracking_model_Users_password_confirm_new"
+				required="true" z="user-managed" promptMessage="prompt_ve_com_tracking_model_users_password_confirm_new" />
+
+			<field:captcha />
+			<div class="submit" id="accountCreateForm_submit">
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<spring:message code="button_save" var="button_save" />
+				<input id="proceed" type="submit" value="${button_save}" />
+				<span style="margin-left: 5px;"> </span>				
+				<field:cancel path="/" label="button_cancel" />				
+			</div>
+		</form:form>
+	</util:panel>
+</div>

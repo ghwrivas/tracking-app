@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="admin/package/recepcionar">
+        <put-attribute name="body" value="/WEB-INF/views/admin/package/recepcionar.jspx"/>
+    </definition>    
+    <definition extends="default" name="admin/package/list">
+        <put-attribute name="body" value="/WEB-INF/views/admin/package/list.jspx"/>
+    </definition>    
+    <definition extends="default" name="admin/package/generate/guias">
+        <put-attribute name="body" value="/WEB-INF/views/admin/package/generate-guias.jspx"/>
+    </definition>
+    <definition extends="default" name="admin/package/generate/recibos">
+        <put-attribute name="body" value="/WEB-INF/views/admin/package/generate-recibos.jspx"/>
+    </definition>    
+    <definition extends="default" name="admin/package/show">
+        <put-attribute name="body" value="/WEB-INF/views/admin/package/show.jspx"/>
+    </definition>     
+</tiles-definitions>

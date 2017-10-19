@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contenedor" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6368b589-5101-428e-ab59-1db9b0fc421d">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="14"/>
+	<parameter name="contenedor" class="ve.com.tracking.model.Contenedor" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="titulo" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\williams\\Documents\\workspace\\tracking-app\\src\\main\\webapp\\WEB-INF\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT cgc.contenedor_id as contenedor, g.id as guia, cg.codigo as codigo, cg.estatus as estatus, g.peso as peso, g.largo as largo, g.ancho as ancho, g.alto as alto, g.volumen as volumen, g.peso_volumetrico as peso_volumentrico, u.first_name as first_name, u.last_name as last_name, gra.recibo_almacen_id as recibo FROM `codigo_guia_contenedor` as cgc
+inner join codigo_guia as cg on cg.id = cgc.codigo_guia_id
+inner join guia as g on g.id = cg.guia_id
+inner join users as u on u.id = g.cliente
+inner join guia_recibo_almacen as gra on gra.guia_id = g.id
+where cgc.contenedor_id = $P{numero}]]>
+	</queryString>
+	<field name="contenedor" class="java.lang.Long"/>
+	<field name="guia" class="java.lang.Long"/>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estatus" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="peso" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="largo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ancho" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="volumen" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="peso_volumentrico" class="java.math.BigDecimal"/>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="last_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recibo" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="572" height="20" uuid="0a9fea9f-4e31-49c3-8a05-1108276fb03a"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="23" width="79" height="20" uuid="9b8e5645-7213-444d-af11-966683b13acb"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="23" width="79" height="20" uuid="8184c97f-47fd-43c0-8f7e-8ba97fb4f44f"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Creado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="174" y="23" width="212" height="20" uuid="24c86b53-0f3c-4895-b52e-d3717565a8a6"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="23" width="186" height="20" uuid="4e2e4a3f-d85f-433c-a875-41d584b88b47"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="77" height="20" uuid="5364015b-b99a-4aa4-9b68-54ad3fe5eb9a"/>
+				<textFieldExpression><![CDATA[""+$P{contenedor}.getCodigo()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="78" y="0" width="96" height="20" uuid="184a6b23-2022-46ec-b7af-8db78976ecdc"/>
+				<textFieldExpression><![CDATA[$P{contenedor}.getCreated().getTime()]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="174" y="0" width="212" height="20" uuid="f615e612-a941-4943-9472-93509b2e8c47"/>
+				<textFieldExpression><![CDATA[""+$P{contenedor}.getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="0" width="186" height="20" uuid="49b4ef03-558e-41e5-b871-461da3031d54"/>
+				<textFieldExpression><![CDATA[""+$P{contenedor}.getEstatus()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="1" y="23" width="100" height="20" uuid="6c65840b-567d-44a9-a79f-4385878fa051"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Productos]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="1" y="43" width="571" height="1" uuid="261226c1-2375-4b15-8ae6-deae3f17f6c9"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="258" y="0" width="100" height="20" uuid="3a54acc6-8fdf-4f7d-8bc8-22be18f64881"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Contenido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="0" width="145" height="20" uuid="ae70b5ca-946c-4725-a7f7-1bade9122025"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="55" height="20" uuid="68b9466b-5f4e-4905-8f60-16728cbdfd76"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="0" width="45" height="20" uuid="69e06b30-234b-4a50-bf98-b91ab980ae57"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Recibo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement positionType="Float" x="1" y="21" width="571" height="1" uuid="858ffc0f-f3a0-495a-81e5-e9c7cab79a7a"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="68" height="20" uuid="f141c3e3-b06d-4c5c-93f8-699153b849b8"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="0" width="147" height="20" uuid="13e847f3-674f-43b6-bdf2-090e94e20e85"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estatus}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="258" y="0" width="314" height="20" uuid="0e1cb832-d60d-470a-a646-3c224ec384a1"/>
+				<subreportParameter name="guia">
+					<subreportParameterExpression><![CDATA[$F{guia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/reports/recibo_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="68" y="0" width="44" height="20" uuid="71e43b7d-780e-4c5d-ba21-8176762e7451"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{recibo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="402" y="0" width="170" height="20" uuid="c8030870-12cf-4ec4-a787-023547a2b796"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Productos "+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

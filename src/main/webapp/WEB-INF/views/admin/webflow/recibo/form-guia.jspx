@@ -1,0 +1,226 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:url value="" var=""></spring:url>
+	<spring:message code="confirm_save_changes" var="confirm_message"
+		htmlEscape="false" />
+	<script type="text/javascript">
+	var tipoEmbalajes = [];
+	<c:forEach var="embalaje" items="${embalajes}" >
+		var embalaje = [];
+		embalaje['largo'] = '${embalaje.largo}';
+		embalaje['ancho'] = '${embalaje.ancho}';
+		embalaje['alto'] = '${embalaje.alto}';
+		tipoEmbalajes['${embalaje.id}'] = embalaje;
+    </c:forEach>
+		function getVolumenAndPesoVolumetrico() {
+			var divisorVolumen = 1728 * 1;
+			var divisorPesoVolumetrico = 166 * 1;
+			var largo = dojo.byId("largo").value * 1;
+			var ancho = dojo.byId("ancho").value * 1;
+			var alto = dojo.byId("alto").value * 1;
+			var volumen = largo * ancho * alto / divisorVolumen;
+			var pesoVolumetrico = largo * ancho * alto / divisorPesoVolumetrico;
+			dojo.byId("volumen").value = volumen.toFixed(3);
+			dojo.byId("pesoVolumetrico").value = pesoVolumetrico.toFixed(3);
+		}
+
+		dojo.ready(function() {
+			getVolumenAndPesoVolumetrico();
+		});
+
+		function updateDimentions(embalajeId){
+			dojo.byId("largo").value = tipoEmbalajes[embalajeId]['largo'];
+			dojo.byId("ancho").value = tipoEmbalajes[embalajeId]['ancho'];
+			dojo.byId("alto").value = tipoEmbalajes[embalajeId]['alto'];
+			getVolumenAndPesoVolumetrico();			
+		}
+		
+		function validateOnSubmit(form) {
+			var valid = Spring.validateAll();
+			if (!valid) {
+				return false;
+			} else {
+				if (confirm('${confirm_message}')) {
+					$("#aceptar").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+	</script>
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_guia_shipping_data"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<form:form modelAttribute="guia" id="guia" method="POST"
+			onsubmit="return validateOnSubmit(this);">
+			<div style="height: auto; min-height: 200px;">
+				<util:confirm-submit select="peso" focus="peso" submit="aceptar"
+					confirm="false"></util:confirm-submit>
+				<div style="width: 45%; float: left; margin-right: 1px;">
+					<spring:message code="label_ve_com_tracking_model_tipoembalaje"
+						var="label_embalaje" htmlEscape="false"></spring:message>
+					<form:label path="tipoEmbalajeId" for="tipoEmbalajeId">${label_embalaje}:</form:label>
+					<form:select path="tipoEmbalajeId">
+						<form:option value=""></form:option>
+						<c:forEach items="${embalajes}" var="item">
+							<c:choose>
+								<c:when test="${guia.tipoEmbalajeId.id == item.id}">
+									<form:option value="${item.id}" label="${item.nombre}"
+										selected="true" />
+								</c:when>
+								<c:otherwise>
+									<form:option value="${item.id}" label="${item.nombre}" />
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</form:select>
+					<form:errors path="tipoEmbalajeId" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'tipoEmbalajeId',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								onChange : function(e){
+									updateDimentions(e);
+								},
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 5
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message
+						code="label_ve_com_tracking_model_tipoembalaje_largo"
+						var="label_largo" htmlEscape="false"></spring:message>
+					<form:label path="largo" for="largo">${label_largo}:</form:label>
+					<form:input path="largo"></form:input>
+					<form:errors path="largo" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "largo",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 6,
+								onBlur : function(event) {
+									getVolumenAndPesoVolumetrico();
+								}
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message
+						code="label_ve_com_tracking_model_tipoembalaje_ancho"
+						var="label_ancho" htmlEscape="false"></spring:message>
+					<form:label path="ancho" for="ancho">${label_ancho}:</form:label>
+					<form:input path="ancho"></form:input>
+					<form:errors path="ancho" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "ancho",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 7,
+								onBlur : function(event) {
+									getVolumenAndPesoVolumetrico();
+								}
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message
+						code="label_ve_com_tracking_model_tipoembalaje_alto"
+						var="label_alto" htmlEscape="false"></spring:message>
+					<form:label path="alto" for="alto">${label_alto}:</form:label>
+					<form:input path="alto"></form:input>
+					<form:errors path="alto" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "alto",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 8,
+								onBlur : function(event) {
+									getVolumenAndPesoVolumetrico();
+								}
+							}
+						}));
+					</script>
+				</div>
+				<div style="width: 50%; float: right;">
+					<spring:message code="label_ve_com_tracking_model_guia_peso"
+						var="label_weight" htmlEscape="false"></spring:message>
+					<form:label path="peso" for="peso">${label_weight}:</form:label>
+					<form:input path="peso"></form:input>
+					<form:errors path="peso" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "peso",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 9
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message code="label_ve_com_total_piezas_model_guia"
+						var="label_piezas" htmlEscape="false"></spring:message>
+					<form:label path="piezas" for="piezas">${label_piezas}:</form:label>
+					<form:input path="piezas"></form:input>
+					<form:errors path="piezas" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring
+								.addDecoration(new Spring.ElementDecoration(
+										{
+											elementId : "piezas",
+											widgetType : "dijit.form.ValidationTextBox",
+											widgetAttrs : {
+												promptMessage : 'Cantidad de piezas o número guías a ser generados.',
+												required : true,
+												tabIndex : 10
+											}
+										}));
+					</script>
+					<br /> <br /> <label for="volumen">Volumen:</label> <input
+						type="text" id="volumen" disabled="disabled" /> <br /> <br /> <label
+						for="pesoVolumetrico">Peso Volumétrico:</label> <input type="text"
+						id="pesoVolumetrico" disabled="disabled" /> <br /> <br />
+				</div>
+			</div>
+			<br />
+			<div class="submit-web-flow">
+				<spring:message var="aceptar" text="Aceptar" htmlEscape="false" />
+				<input type="submit" id="aceptar" name="aceptar" tabindex="11"
+					value="${fn:escapeXml(aceptar)}" /> <span
+					style="margin-left: 5px;"> </span>
+				<spring:message var="back" code="button_back" htmlEscape="false" />
+				<input type="submit" id="back" name="back" tabindex="12"
+					value="${fn:escapeXml(back)}" /> <span style="margin-left: 5px;">
+				</span>
+				<spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+				<input type="submit" id="cancel" name="cancel"
+					value="${fn:escapeXml(cancel)}" tabindex="13" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'next',
+						event : 'onclick'
+					}));
+				</script>
+			</div>
+		</form:form>
+	</util:panel>
+</div>

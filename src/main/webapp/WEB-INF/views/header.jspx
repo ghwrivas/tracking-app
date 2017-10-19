@@ -1,0 +1,244 @@
+<div id="header"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+
+	<script type="text/javascript">
+		$('document').ready(function() {
+			$('.menu').fixedMenu();
+		});
+	</script>
+
+	<spring:url var="banner" value="/resources/images/banner.png" />
+	<spring:url var="home" value="/" />
+	<spring:message text="button_home" var="home_label" htmlEscape="false" />
+	<!--   <a href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
+    <img src="${banner}" />
+  </a> -->
+
+	<div class="menu">
+		<ul>
+			<li><spring:message code="button_home" var="home_label"
+					htmlEscape="false" /> <spring:url var="home" value="/" /> <a
+				href="${home}" name="${home_label}" title="${home_label}">
+					${home_label}</a></li>
+
+			<sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+				<li><spring:message code="menu_category_account_label"
+						var="menu_category_account_label" htmlEscape="false" /> <a
+					href="#" name="${menu_category_account_label}"
+					title="${menu_category_account_label}">${menu_category_account_label}
+						&#x25BC;</a>
+					<ul>
+						<li><spring:url value="/account/create" var="create" /> <a
+							href="${create}"> <spring:message
+									code="menu_item_account_create_label" />
+						</a></li>
+						<li><spring:url value="/account/resend" var="resend" /> <a
+							href="${resend}"> <spring:message
+									code="menu_item_account_resend_label" />
+						</a></li>
+						<li><spring:url value="/login" var="login" /> <a
+							href="${login}"> <spring:message
+									code="menu_item_account_login_label" />
+						</a></li>
+					</ul></li>
+			</sec:authorize>
+
+			<sec:authorize access="hasRole('ROLE_CLIENT')">
+				<li><spring:message code="menu_category_transactions_label"
+						var="menu_category_transactions_label" htmlEscape="false" /> <a
+					href="#" name="${menu_category_transactions_label}"
+					title="${menu_category_transactions_label}">${menu_category_transactions_label}
+						&#x25BC;</a>
+					<ul>
+						<li><spring:url value="/client/package/notify" var="notify" />
+							<a href="${notify}"> <spring:message
+									code="menu_item_package_notify_label" />
+						</a></li>
+						<li><spring:url
+								value="/client/package/list?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="list" htmlEscape="false" /> <a href="${list}"> <spring:message
+									code="menu_item_package_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/client/recibo/list?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="recibo_list" htmlEscape="false" /> <spring:message
+								code="label_ve_com_tracking_model_reciboalmacen_plural"
+								var="label_receipts" /> <a href="${recibo_list}"> <spring:message
+									code="entity_list_all" arguments="${label_receipts}"
+									htmlEscape="false" />
+						</a></li>
+					</ul></li>
+			</sec:authorize>
+			<sec:authorize
+				access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR','ROLE_LIBERADOR')">
+				<li><spring:message code="menu_category_transactions_label"
+						var="menu_category_transactions_label" htmlEscape="false" /> <a
+					href="#" name="${menu_category_transactions_label}"
+					title="${menu_category_transactions_label}">${menu_category_transactions_label}
+						&#x25BC;</a>
+
+					<ul>
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR')">
+							<li><spring:url value="/admin/package/recepcionar"
+									var="recepcionar" /> <a href="${recepcionar}"> <spring:message
+										code="menu_item_package_recepcionar_label" />
+							</a></li>
+							<li><spring:url
+									value="/admin/package/generate/recibos?page=1&amp;size=${empty param.size ? 10 : param.size}"
+									var="generate_guias" htmlEscape="false" /> <a
+								href="${generate_guias}"> <spring:message
+										code="menu_item_package_generate_recibo_label" />
+							</a></li>
+							<li><spring:url value="/admin/webflow/contenedor"
+									var="contenedor" /> <a href="${contenedor}"> <spring:message
+										code="menu_item_contenedor_new_label" />
+							</a></li>
+						</sec:authorize>
+						<li><spring:url
+								value="/admin/package/list?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="list" htmlEscape="false" /> <a href="${list}"> <spring:message
+									code="menu_item_package_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/admin/guia/list?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="guia_list" htmlEscape="false" /> <a href="${guia_list}">
+								<spring:message code="menu_item_guia_list_label" />
+						</a></li>
+
+						<li><spring:url
+								value="/admin/recibo/list?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="recibo_list" htmlEscape="false" /> <spring:message
+								code="label_ve_com_tracking_model_reciboalmacen_plural"
+								var="label_receipts" /> <a href="${recibo_list}"> <spring:message
+									code="entity_list_all" arguments="${label_receipts}"
+									htmlEscape="false" />
+						</a></li>
+						<li><spring:url
+								value="/admin/contenedor?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="contenedor_list" htmlEscape="false" /> <a
+							href="${contenedor_list}"> <spring:message
+									code="menu_item_contenedor_list_label" />
+						</a></li>
+					</ul></li>
+			</sec:authorize>
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECEPTOR')">
+				<li><spring:message code="menu_category_administracion_label"
+						var="menu_category_administracion_label" htmlEscape="false" /> <a
+					href="#" name="${menu_category_administracion_label}"
+					title="${menu_category_administracion_label}">${menu_category_administracion_label}
+						&#x25BC;</a>
+
+					<ul>
+						<li><spring:url
+								value="/admin/categorias?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_categoria_list" htmlEscape="false" /> <a
+							href="${i_categoria_list}"> <spring:message
+									code="menu_item_categoriadetalle_list_label" />
+						</a></li>
+
+						<li><spring:url
+								value="/admin/tipocambio?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_tipocambio_list" htmlEscape="false" /> <a
+							href="${i_tipocambio_list}"> <spring:message
+									code="menu_item_tipocambio_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/admin/tipoembalaje?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_tipoembalaje_list" htmlEscape="false" /> <a
+							href="${i_tipoembalaje_list}"> <spring:message
+									code="menu_item_tipoembalaje_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/admin/destinos?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_destinos_list" htmlEscape="false" /> <a
+							href="${i_destinos_list}"> <spring:message
+									code="menu_item_destinos_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/admin/authorities?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_authorities_list" htmlEscape="false" /> <a
+							href="${i_authorities_list}"> <spring:message
+									code="menu_item_authorities_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/admin/users?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_users_list" htmlEscape="false" /> <a
+							href="${i_users_list}"> <spring:message
+									code="menu_item_users_list_label" />
+						</a></li>
+						<li><spring:url
+								value="/admin/empresaenvio?page=1&amp;size=${empty param.size ? 10 : param.size}"
+								var="i_empresaenvio_list" htmlEscape="false" /> <a
+							href="${i_empresaenvio_list}"> <spring:message
+									code="menu_item_empresaenvio_list_label" />
+						</a></li>
+						<li><spring:url value="/admin/empresa/1" var="empresa" /> <a
+							href="${empresa}">Info</a></li>
+					</ul></li>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<li><sec:authentication property="principal.nombreCompleto"
+						var="username_account" /> <c:choose>
+						<c:when test="${username_account != null}">
+
+							<a href="#" name="${username_account}"
+								title="${username_account}">${username_account} &#x25BC;</a>
+
+						</c:when>
+						<c:otherwise>
+							<spring:message code="menu_category_account_label"
+								var="menu_category_account_label" />
+							<a href="#" name="${menu_category_account_label}"
+								title="${menu_category_account_label}">${menu_category_account_label}
+								&#x25BC;</a>
+						</c:otherwise>
+					</c:choose>
+					<ul>
+						<li><spring:url value="/account/update" var="update" /> <a
+							href="${update}"> <spring:message
+									code="menu_item_account_update_label" />
+						</a></li>
+						<li><spring:url value="/password/change" var="change" /> <a
+							href="${change}"> <spring:message
+									code="menu_item_account_change_password_label" />
+						</a></li>
+						<li><spring:url value="/resources/j_spring_security_logout"
+								var="logout" /> <a href="${logout}"> <spring:message
+									code="menu_item_account_logout_label" />
+						</a></li>
+					</ul></li>
+			</sec:authorize>
+			<li><spring:message code="menu_category_help_label"
+					var="menu_category_help_label" htmlEscape="false" /> <a href="#"
+				name="${menu_category_help_label}"
+				title="${menu_category_help_label}">${menu_category_help_label}
+					&#x25BC;</a>
+				<ul>
+					<sec:authorize
+						access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR','ROLE_LIBERADOR')">
+						<li><spring:message code="menu_item_manual_usuario"
+								var="menu_item_manual_usuario" htmlEscape="false" /> <spring:url
+								var="manual_usuario"
+								value="/resources/documentos/manual-usuario.pdf" /> <a
+							href="${manual_usuario}" name="${menu_item_manual_usuario}"
+							title="${menu_item_manual_usuario}" target="_blank">${menu_item_manual_usuario}</a>
+						</li>
+					</sec:authorize>
+					<li><spring:message code="menu_item_manual_cliente"
+							var="menu_item_manual_cliente" htmlEscape="false" /> <spring:url
+							var="manual_cliente"
+							value="/resources/documentos/manual-cliente.pdf" /> <a
+						href="${manual_cliente}" name="${menu_item_manual_cliente}"
+						title="${menu_item_manual_cliente}" target="_blank">${menu_item_manual_cliente}</a>
+					</li>
+				</ul></li>
+		</ul>
+	</div>
+</div>

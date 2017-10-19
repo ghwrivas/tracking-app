@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_ve_com_tracking_model_Empresa" items="${empresas}" z="tiK6dXK4K40vsS8FvGw6iKpj+w0=">
+        <table:table create="false" data="${empresas}" delete="false" id="l_ve_com_tracking_model_Empresa" path="/admin/empresa" z="user-managed">
+            <table:column id="c_ve_com_tracking_model_Empresa_nombre" property="nombre" z="+hH9/uJ2aFHbI9XEuhrz2ld5nBQ="/>
+            <table:column id="c_ve_com_tracking_model_Empresa_direccion" property="direccion" z="OKxBcqDJWs4tDMsKkH3opVamZ88="/>
+            <table:column id="c_ve_com_tracking_model_Empresa_telefono" property="telefono" z="DMjNzncyZ4E+bwfkzlOcRA832so="/>
+        </table:table>
+    </page:list>
+</div>

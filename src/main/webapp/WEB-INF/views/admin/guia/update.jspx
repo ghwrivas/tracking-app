@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_ve_com_tracking_model_Guia" modelAttribute="guia" path="/admin/guia" versionField="none" z="GpqmYl1RsDO2bYMrahxIhXE0FZ8=">
+        <field:simple field="detalleGuias" id="c_ve_com_tracking_model_Guia_detalleGuias" messageCode="entity_reference_not_managed" messageCodeAttribute="Detalle Guia" z="e+cJUWMcFIOni+bmizfIC7El1zI="/>
+        <field:simple field="estatusGuias" id="c_ve_com_tracking_model_Guia_estatusGuias" messageCode="entity_reference_not_managed" messageCodeAttribute="Estatus Guia" z="y90H0kIMNpsqcCAu8C0/RDzMT4U="/>
+        <field:simple field="guiaContenedors" id="c_ve_com_tracking_model_Guia_guiaContenedors" messageCode="entity_reference_not_managed" messageCodeAttribute="Guia Contenedor" z="AZ1gRgHW6RWLYPRKwE1TJtwXca4="/>
+        <field:select field="creadorId" id="c_ve_com_tracking_model_Guia_creadorId" itemValue="id" items="${userses}" path="/admin/users" z="KtUrufpd2XyZHU8dmYWdXFMfuaM="/>
+        <field:input field="tipoTransportacion" id="c_ve_com_tracking_model_Guia_tipoTransportacion" required="true" z="Jb1RQSpUqkPDtIsKAYNhd4appt8="/>
+        <field:select field="estatus" id="c_ve_com_tracking_model_Guia_estatus" items="${tipoestatusguias}" path="tipoestatusguias" required="true" z="joqIJWUeUTD0nHJcWFIr4sMPA64="/>
+        <field:input field="descuento" id="c_ve_com_tracking_model_Guia_descuento" required="true" validationMessageCode="field_invalid_number" z="ppdwxy9Dqg0kJAfx8TRIv9Ppn3w="/>
+        <field:select field="destino" id="c_ve_com_tracking_model_Guia_destino" itemValue="id" items="${destinoses}" path="/admin/destinos" z="yzrguBgWR+7kdI5+zx61gHz+PFc="/>
+        <field:select field="origen" id="c_ve_com_tracking_model_Guia_origen" itemValue="id" items="${destinoses}" path="/admin/destinos" z="lIR7Z9w+D/82WANgi6V2kIiTWnk="/>
+        <field:select field="tipoCargo" id="c_ve_com_tracking_model_Guia_tipoCargo" items="${tipocargoes}" path="tipocargoes" required="true" z="oIZ/7d6HV0tbS19dOulVHPudfGY="/>
+        <field:input field="precioCargo" id="c_ve_com_tracking_model_Guia_precioCargo" required="true" validationMessageCode="field_invalid_number" z="Xc4OagQSmNZCYPlaSw6mL+URayM="/>
+        <field:input field="totalCargo" id="c_ve_com_tracking_model_Guia_totalCargo" required="true" validationMessageCode="field_invalid_number" z="xnyg6Fse8ygMfRy3ZxIafLtwoLk="/>
+        <field:input field="totalCargoCambio" id="c_ve_com_tracking_model_Guia_totalCargoCambio" required="true" validationMessageCode="field_invalid_number" z="nkPDlurbwKpYi+HzRWvHRUmZfRQ="/>
+    </form:update>
+</div>

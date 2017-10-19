@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_ve_com_tracking_model_GuiaReciboAlmacen" object="${guiareciboalmacen}" path="/admin/guiasrecibo" z="MxOz1gfCz/v6OHZUlyjw98JydCM=">
+        <field:display field="guiaId" id="s_ve_com_tracking_model_GuiaReciboAlmacen_guiaId" object="${guiareciboalmacen}" z="N9hmh9QfuyEGM75Le8LZm9DBKto="/>
+        <field:display field="reciboAlmacenId" id="s_ve_com_tracking_model_GuiaReciboAlmacen_reciboAlmacenId" object="${guiareciboalmacen}" z="tdLBDtTy/BnKZ16jaVQkSWnNtw4="/>
+    </page:show>
+</div>

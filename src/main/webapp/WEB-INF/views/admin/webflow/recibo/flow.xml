@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<secured attributes="ROLE_USER, ROLE_ADMIN" match="any" />
+
+	<persistence-context />
+
+	<on-start>
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.categorias"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.embalajes"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.transportacion"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.destinos"
+			result-type="java.io.Serializable" />
+		<evaluate expression="new java.util.ArrayList()" result="flowScope.cargos"
+			result-type="java.io.Serializable" />
+		<evaluate expression="reciboManager.createItem()" result="flowScope.item"></evaluate>
+		<evaluate expression="reciboManager.createGuia()" result="flowScope.guia"></evaluate>
+		<evaluate expression="reciboManager.createPaquetesSelectedForm()"
+			result="flowScope.paquetesSelected"></evaluate>
+	</on-start>
+
+	<!-- Create o edit recibo -->
+	<decision-state id="recibo-null">
+		<on-entry>
+			<evaluate expression="reciboManager.createRecibo(requestParameters.user)"
+				result="flowScope.recibo" />
+		</on-entry>
+		<if test="flowScope.recibo != null" then="view-recibo" else="recibo-not-null" />
+	</decision-state>
+
+	<decision-state id="recibo-not-null">
+		<on-entry>
+			<evaluate expression="reciboManager.editRecibo(requestParameters.id)"
+				result="flowScope.recibo" />
+		</on-entry>
+		<if test="flowScope.recibo != null" then="view-recibo" else="end-to-list" />
+	</decision-state>
+
+	<!-- Flow Recibo -->
+
+	<view-state id="view-recibo" view="admin/webflow/recibo/view-recibo">
+		<transition on="cargos" to="render-form-cargos" />
+		<transition on="add_guia" to="form-add-item" >
+				<evaluate expression="reciboManager.createGuia()" result="flowScope.guia"></evaluate>
+		</transition>
+		<transition on="confirmar" to="confirmar-pago" bind="false" />			
+		<transition on="delete" bind="false" to="delete-guia" />
+		<transition on="cancel" to="end-state" />
+	</view-state>
+
+	<view-state id="form-recibo" view="admin/webflow/recibo/form-recibo"
+		model="recibo">
+		<on-render>
+			<evaluate expression="reciboManager.populateDataReferenceFormRecibo"></evaluate>
+		</on-render>		
+		<transition on="save" to="save-recibo" />
+		<transition on="cancel" to="view-recibo" bind="false" validate="false"/>		
+	</view-state>
+
+	<!-- A sample view state -->
+	<view-state id="form-add-item" view="admin/webflow/recibo/form-add-item"
+		model="item">
+		<on-render>
+			<evaluate expression="reciboManager.populateDataReferenceFormAddItemGuia"></evaluate>
+		</on-render>		
+		<transition on="add" to="add-item"></transition>
+		<transition on="delete" to="delete-item" bind="false" />
+		<transition on="next" to="form-guia" bind="false" validate="false" />
+		<transition on="cancel" to="view-recibo" bind="false" validate="false" />
+	</view-state>
+
+	<view-state id="form-guia" view="admin/webflow/recibo/form-guia"
+		model="guia">
+		<on-render>
+			<evaluate expression="reciboManager.populateDataReferenceFormGuia"></evaluate>
+		</on-render>
+		<transition on="aceptar" to="add-guia" />
+		<transition on="back" to="form-add-item" bind="false" validate="false" />		
+		<transition on="cancel" to="view-recibo" bind="false"
+			validate="false" />
+	</view-state>
+
+	<action-state id="render-form-cargos">
+		<evaluate expression="reciboManager.renderFormCargos" />
+		<transition on="success" to="form-recibo"></transition>
+		<transition on="error" to="view-recibo" />		
+	</action-state>
+	
+	<action-state id="save-recibo">
+		<evaluate expression="reciboManager.saveRecibo" />
+		<transition on="success" to="has-paquete-to-process"></transition>
+		<transition on="error" to="form-recibo" />
+	</action-state>
+
+	<action-state id="has-paquete-to-process">
+		<evaluate expression="reciboManager.hasPaquetesToProcess" />
+		<transition on="yes" to="view-paquetes" />
+		<transition on="no" to="view-recibo"></transition>		
+	</action-state>
+
+	<view-state id="view-paquetes" view="admin/webflow/recibo/view-paquetes" model="paquetesSelected">
+		<on-render>
+		<evaluate expression="reciboManager.mapPaquetesToProcess" />
+		</on-render>	
+		<transition on="save" to="process-paquetes" />	
+		<transition on="cancel" to="view-recibo" bind="false"
+			validate="false" />
+	</view-state>
+		
+	<action-state id="process-paquetes">
+		<evaluate expression="reciboManager.processPaquetes" />
+		<transition on="success" to="view-recibo"></transition>
+		<transition on="error" to="view-paquetes"></transition>
+	</action-state>
+	
+	<action-state id="add-guia">
+		<evaluate expression="reciboManager.addGuia" />
+		<transition on="success" to="view-recibo" />
+		<transition on="error" to="form-guia"></transition>
+	</action-state>
+	
+	<action-state id="add-item">
+		<evaluate expression="reciboManager.addItem" />
+		<transition on="success" to="form-add-item">
+			<evaluate expression="reciboManager.createItem()" result="flowScope.item" />
+		</transition>
+		<transition on="error" to="form-add-item"></transition>
+	</action-state>
+	
+	<action-state id="delete-item">
+		<on-entry>
+			<set name="requestScope.index" value="requestParameters.listIndex"
+				type="java.lang.Integer"></set>
+		</on-entry>
+		<evaluate expression="reciboManager.deleteItem"></evaluate>
+		<transition on="success" to="form-add-item" />
+		<transition on="error" to="form-add-item" />
+	</action-state>
+
+	<action-state id="delete-guia">
+		<on-entry>
+			<set name="requestScope.index" value="requestParameters.listIndex"
+				type="java.lang.Integer"></set>
+		</on-entry>
+		<evaluate expression="reciboManager.deleteGuia"></evaluate>
+		<transition on="success" to="view-recibo" />
+		<transition on="error" to="view-recibo" />
+	</action-state>
+
+	<action-state id="confirmar-pago">
+		<evaluate expression="reciboManager.confirmarPago"></evaluate>
+		<transition on="success" to="view-recibo" />
+		<transition on="error" to="view-recibo" />
+	</action-state>
+
+	<!-- end state -->
+	<end-state id="end-state"
+		view="externalRedirect:contextRelative:admin/recibo/list?page=1&amp;size=10" />
+
+	<!-- end state -->
+	<end-state id="end-to-list"
+		view="externalRedirect:contextRelative:admin/recibo/list?page=1&amp;size=10" />
+			
+</flow>

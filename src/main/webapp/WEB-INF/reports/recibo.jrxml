@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recibo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c5d9cc8-27f3-47f6-9670-f8133d2ea107">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="26"/>
+	<property name="ireport.y" value="9"/>
+	<parameter name="numero" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\williams\\Documents\\workspace\\tracking-app\\src\\main\\webapp\\WEB-INF\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="recibo" class="ve.com.tracking.forms.ReciboAlmacenForm" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""+$P{recibo}.getTotalCargo()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="ve.com.tracking.model.Empresa"/>
+	<parameter name="moneda" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT count(g.id) as piezas, g.id as guia, cg.codigo, g.largo, g.ancho, g.alto, g.peso, g.peso*count(g.id) as peso_total, g.peso_volumetrico, g.volumen, u.first_name, u.last_name FROM codigo_guia as cg
+inner join guia as g on g.id = cg.guia_id
+inner join guia_recibo_almacen as gra on gra.guia_id=g.id
+inner join recibo_almacen as ra on ra.id = gra.recibo_almacen_id
+inner join users as u on u.id = ra.cliente
+where gra.recibo_almacen_id=$P{numero} group by guia]]>
+	</queryString>
+	<field name="piezas" class="java.lang.Long"/>
+	<field name="guia" class="java.lang.Long"/>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="largo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ancho" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="peso" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="peso_total" class="java.math.BigDecimal"/>
+	<field name="peso_volumetrico" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="volumen" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="last_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="dimensiones" class="java.lang.String">
+		<variableExpression><![CDATA[String.valueOf($F{largo})+"x"+String.valueOf($F{ancho})+"x"+String.valueOf($F{alto})]]></variableExpression>
+	</variable>
+	<variable name="nombre_completo" class="java.lang.String">
+		<variableExpression><![CDATA[$F{first_name}+" "+$F{last_name}]]></variableExpression>
+	</variable>
+	<variable name="totalPesoColumn" class="java.math.BigDecimal" resetType="Column" incrementType="Column">
+		<variableExpression><![CDATA[$V{totalPesoColumn}.add( $F{peso_total} )]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal("0.0")]]></initialValueExpression>
+	</variable>
+	<variable name="totalPiezas" class="java.lang.Long">
+		<variableExpression><![CDATA[$V{totalPiezas}+$F{piezas}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Long("0")]]></initialValueExpression>
+	</variable>
+	<variable name="totalPesoVol" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{totalPesoVol}.add( $F{peso_volumetrico} )]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal("0.0")]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="569" height="95" uuid="a0f95c1e-944a-4ce4-861e-b4a961c5d5d7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="0" width="257" height="30" uuid="0690cbe8-54b1-4878-a2d6-0ba27d25c400"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibo de Almacén]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="374" y="2" width="194" height="30" uuid="d0239763-fcbb-4032-8c66-45af5f884fde"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Número: "+$P{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="30" width="257" height="20" uuid="3c35bd93-4c33-420b-a597-afbc68c1f240"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{empresa}.getNombre()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="50" width="257" height="20" uuid="59198c04-0909-4e71-ae40-4fbe4cada3e4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{empresa}.getDireccion()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="70" width="257" height="15" uuid="6da09142-0983-4a8c-89f7-ccf9bba08022"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telf.: "+$P{empresa}.getTelefono()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="468" y="32" width="100" height="20" uuid="17e1054b-64a0-4536-9aa8-a48302d41ffd"/>
+				<textFieldExpression><![CDATA[$P{recibo}.getCreated().getTime()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement positionType="Float" x="378" y="54" width="144" height="38" uuid="2257d84c-eca6-4858-81f0-34966c1722d9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{moneda}.equals("DOLAR") ? $P{recibo}.getTotalCargo() : $P{recibo}.getTotalCargoCambio() )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="522" y="54" width="46" height="38" uuid="43a3aa2a-73ef-4126-bbb4-1f09241aee28"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{moneda}.equals("DOLAR") ? $P{recibo}.getOrigen().getPais().getCurrencyCode() : $P{recibo}.getDestino().getPais().getCurrencyCode())]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="569" height="35" uuid="990bcaa9-4714-44c4-9eea-fc343703eb65"/>
+			</rectangle>
+			<line>
+				<reportElement x="1" y="17" width="570" height="1" uuid="7e9b53a2-dbce-45df-8ca3-054bb96e3fff"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="0" width="141" height="17" uuid="005359c3-6291-4ee6-8291-aca78b3c475c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información del Cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="18" width="188" height="17" uuid="66d6a99c-7f13-451c-bca4-2135472cd208"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CI/RIF/Pasaporte: "+$P{recibo}.getCliente().getCiRifPassport()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="18" width="191" height="17" uuid="d7dc6f4a-7512-4f01-a74d-74cc36b46803"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre: "+$P{recibo}.getCliente().getFirstName()+" "+$P{recibo}.getCliente().getLastName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="18" width="182" height="17" uuid="c6820d3c-9ddf-40b7-a0b8-282d3e9ee361"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telf.: "+$P{recibo}.getCliente().getTelefono()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="-2" width="569" height="16" uuid="d0162516-827c-459b-842a-dda16c91832c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="0" width="35" height="15" uuid="14e4e563-9a63-47e0-8671-e10d06a20b16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Piezas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="87" height="15" uuid="cfcabe12-4202-4e01-8d6e-66219ce6ef8d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dimensiones (in)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="59" height="15" uuid="0472d260-6fdd-4311-81c2-d76a54932391"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Peso (lb)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="70" height="15" uuid="90ca3114-026d-4921-bef8-2616cc72b32b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vol. Peso (vlb)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="248" height="15" uuid="71395a03-37e1-4b90-97b3-b38fd27f5f05"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="0" width="52" height="15" uuid="f075be94-e911-4dec-b9d3-99b6a9152fbd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Peso Total]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="499" y="-2" width="1" height="17" uuid="c17f2c19-8a1d-4994-b167-03df4548ed45"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="445" y="-2" width="1" height="16" uuid="93ae981c-3274-450d-99a9-2467652ea963"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="38" y="-2" width="1" height="16" uuid="ca56cdf3-593d-4d0a-86fd-bbd721952e72"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="381" y="-2" width="1" height="17" uuid="df66530e-56b2-44fa-b18b-d46a0a916071"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="128" y="-2" width="1" height="16" uuid="303df935-0780-4d7b-9a35-7baa1165ead6"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="1" y="-1" width="569" height="22" uuid="988e82da-f826-48a8-8c6d-ec0340f4b4b6"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="0" width="35" height="20" uuid="ffb64d8f-cff2-4821-9f03-a1e7be343771"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{piezas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="0" width="59" height="18" uuid="b7b9ea76-3df1-4b7b-85ab-9fc89fd40f8c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{peso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="52" height="18" uuid="a1997cf9-e94b-42e1-aaa3-8954fe1b51c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{peso_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="68" height="18" uuid="e5a6ab2b-086b-4d55-ae21-ffb6216b3bfd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{peso_volumetrico}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="130" y="0" width="248" height="20" uuid="81e045be-b715-48bf-89da-3fccf28abc50"/>
+				<subreportParameter name="guia">
+					<subreportParameterExpression><![CDATA[$F{guia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/reports/recibo_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="40" y="0" width="87" height="20" uuid="57c5de42-6921-47f3-8e74-50fcd7a2d57f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{dimensiones}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="38" y="-1" width="1" height="22" uuid="614d7561-d70c-443d-aea8-dd42519e7301"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="128" y="-1" width="1" height="22" uuid="396af986-1141-46f7-82ab-3ec4b9f3225c"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="381" y="-1" width="1" height="22" uuid="adb97e8a-0f72-459c-b483-7bfbdfb19241"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="445" y="-1" width="1" height="22" uuid="5102b302-ccd3-4a4e-8bec-cc6a8904c54d"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="499" y="-1" width="1" height="22" uuid="8a7d11ab-ae1d-45cf-870c-5164764582b5"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="54" splitType="Stretch">
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="1" y="3" width="569" height="50" uuid="b0278766-e2cf-4f06-bf4d-7021a4402062"/>
+			</rectangle>
+			<line>
+				<reportElement x="1" y="17" width="569" height="1" uuid="c78490d3-c6f7-4944-900c-74bb12bece71"/>
+			</line>
+			<line>
+				<reportElement x="382" y="3" width="1" height="50" uuid="bc17b2af-c28c-4c56-bcd2-619196f7f204"/>
+			</line>
+			<line>
+				<reportElement x="427" y="3" width="1" height="50" uuid="e3f60e77-7cef-4cff-93ea-a78b979b06ed"/>
+			</line>
+			<line>
+				<reportElement x="488" y="3" width="1" height="50" uuid="41cd9ba8-137f-46c0-b47e-18ebd0e09c2c"/>
+			</line>
+			<staticText>
+				<reportElement x="127" y="1" width="141" height="17" uuid="20f5fea7-0939-4d01-a7ba-e90441e41f00"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibido por / Firma]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="3" width="35" height="15" uuid="1e670e71-e98b-4d7f-bc38-4f25e4b407fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Piezas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="3" width="52" height="15" uuid="3b9cd4b1-050b-43fc-a869-14eee68c24b4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Peso Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="494" y="3" width="70" height="15" uuid="82e69baa-8ae9-4795-b645-7f45d81aedfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vol. Peso (vlb)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="25" width="52" height="20" uuid="a0765c1b-e0f3-4927-a199-eb88a76b4dfe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{totalPesoColumn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="25" width="39" height="20" uuid="f69c021a-cde3-4633-ab0e-08478382a739"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{totalPiezas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="25" width="70" height="20" uuid="dae0f160-035f-4b53-937e-5ed4a79e5150"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{totalPesoVol}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

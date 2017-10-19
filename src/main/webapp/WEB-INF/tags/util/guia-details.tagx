@@ -1,0 +1,352 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="label_guia_details" var="details_guia" />
+
+
+	<div id="numero-guia">
+		<label for="_tracking_id"> <spring:message code="label_number" />
+		</label>
+		<div class="box" id="_tracking_id" style="font-size: xx-large;">
+			${codigoGuia.codigo}</div>
+	</div>
+	<br />
+
+
+	<div id="estatus">
+		<label for="_estatus_id"> <spring:message
+				code="label_ve_com_tracking_secuence_status" />
+		</label>
+		<div class="box" id="_estatus_id" style="font-size: xx-large;">
+			<spring:url var="line" value="/resources/images/line.png" />
+			<ul class="list-horizontal">
+				<c:set value="0" var="paso"></c:set>
+				<c:forEach items="${allEstatus}" var="estatus" varStatus="theCount">
+
+					<c:choose>
+						<c:when test="${paso == '1'}">
+
+							<c:if test="${estatus == 'CREADO'}">
+								<spring:url var="image"
+									value="/resources/images/guia-creado-gris.png" />
+							</c:if>
+							<c:if test="${estatus == 'AGREGADO_AL_CONTENEDOR'}">
+								<spring:url var="image"
+									value="/resources/images/guia-contenedor-gris.png" />
+							</c:if>
+							<c:if test="${estatus == 'EN_TRANSITO_PAIS_DESTINO'}">
+								<spring:url var="image"
+									value="/resources/images/guia-transito-gris.png" />
+							</c:if>
+							<c:if test="${estatus == 'CONFIRMADO_ALMACEN_DESTINO'}">
+								<spring:url var="image"
+									value="/resources/images/guia-confirmado-almacen-gris.png" />
+							</c:if>
+							<c:if test="${estatus == 'ENTREGADO_CLIENTE'}">
+								<spring:url var="image"
+									value="/resources/images/guia-entregado-gris.png" />
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${estatus == 'CREADO'}">
+								<spring:url var="image"
+									value="/resources/images/guia-creado-color.png" />
+							</c:if>
+							<c:if test="${estatus == 'AGREGADO_AL_CONTENEDOR'}">
+								<spring:url var="image"
+									value="/resources/images/guia-contenedor-color.png" />
+							</c:if>
+							<c:if test="${estatus == 'EN_TRANSITO_PAIS_DESTINO'}">
+								<spring:url var="image"
+									value="/resources/images/guia-transito-color.png" />
+							</c:if>
+							<c:if test="${estatus == 'CONFIRMADO_ALMACEN_DESTINO'}">
+								<spring:url var="image"
+									value="/resources/images/guia-confirmado-almacen-color.png" />
+							</c:if>
+							<c:if test="${estatus == 'ENTREGADO_CLIENTE'}">
+								<spring:url var="image"
+									value="/resources/images/guia-entregado-color.png" />
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+					<li>
+					<sec:authorize access="!hasRole('ROLE_CLIENT')">
+								<c:if test="${estatus != 'AGREGADA_RECIBO_ALMACEN'}">
+							<img src="${image}" />
+						</c:if>		
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_CLIENT')">
+								<c:if test="${estatus != 'AGREGADA_RECIBO_ALMACEN' and estatus != 'AGREGADO_AL_CONTENEDOR'}">
+							<img src="${image}" />
+						</c:if>		
+					</sec:authorize>					
+</li>
+					<sec:authorize access="!hasRole('ROLE_CLIENT')">
+					<c:if test="${estatus != 'ENTREGADO_CLIENTE' and estatus != 'AGREGADA_RECIBO_ALMACEN'}">
+						<li style="width: 20px; padding: 20px;"><img src="${line}" />
+						</li>
+					</c:if>	
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_CLIENT')">
+					<c:if test="${estatus != 'ENTREGADO_CLIENTE' and estatus != 'AGREGADA_RECIBO_ALMACEN' and estatus != 'AGREGADO_AL_CONTENEDOR'}">
+						<li style="width: 20px; padding: 20px;"><img src="${line}" />
+						</li>
+					</c:if>	
+					</sec:authorize>	
+
+
+
+					<c:if test="${codigoGuia.estatus == estatus}">
+						<c:set var="paso" value="1"></c:set>
+					</c:if>
+				</c:forEach>
+			</ul>
+
+		</div>
+	</div>
+	<br />
+	
+	<div style="overflow: auto;">
+		<div id="left" style="float: left; width: 25%;">
+			<div>
+				<label for="label_fecha_creacion_guia"> <spring:message
+						code="label_fecha_creacion_guia" var="label_fecha_creacion_guia"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_fecha_creacion_guia} " />
+				</label>:
+				<fmt:formatDate value="${codigoGuia.guiaId.created.time}"
+						pattern="${date_pattern}" />
+				<br />
+
+			</div>
+			<br />
+			<div>
+				<label for="label_ve_com_tracking_model_guia_peso"> <spring:message
+						code="label_ve_com_tracking_model_guia_peso" var="label_ve_com_tracking_model_guia_peso"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_ve_com_tracking_model_guia_peso} " />
+				</label>:
+				<c:out value="${codigoGuia.guiaId.peso}" />
+				<br />
+
+			</div>
+			<br />	
+			<div>
+				<label for="label_ve_com_tracking_model_guia_largo"> <spring:message
+						code="label_ve_com_tracking_model_guia_largo" var="label_ve_com_tracking_model_guia_largo"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_ve_com_tracking_model_guia_largo} " />
+				</label>:
+				<c:out value="${codigoGuia.guiaId.largo}" />
+				<br />
+
+			</div>
+			<br />	
+			<div>
+				<label for="label_ve_com_tracking_model_guia_ancho"> <spring:message
+						code="label_ve_com_tracking_model_guia_ancho" var="label_ve_com_tracking_model_guia_ancho"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_ve_com_tracking_model_guia_ancho} " />
+				</label>:
+				<c:out value="${codigoGuia.guiaId.ancho}" />
+				<br />
+
+			</div>
+			<br />	
+			<div>
+				<label for="label_ve_com_tracking_model_guia_alto"> <spring:message
+						code="label_ve_com_tracking_model_guia_alto" var="label_ve_com_tracking_model_guia_alto"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_ve_com_tracking_model_guia_alto} " />
+				</label>:
+				<c:out value="${codigoGuia.guiaId.alto}" />
+				<br />
+
+			</div>
+			<br />	
+			<div>
+				<label for="label_ve_com_peso_volumetrico_model_guia"> <spring:message
+						code="label_ve_com_peso_volumetrico_model_guia" var="label_ve_com_peso_volumetrico_model_guia"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_ve_com_peso_volumetrico_model_guia} " />
+				</label>:
+				<c:out value="${codigoGuia.guiaId.pesoVolumetrico}" />
+				<br />
+
+			</div>
+			<br />	
+			<div>
+				<label for="label_ve_com_total_volume_model_guia"> <spring:message
+						code="label_ve_com_total_volume_model_guia" var="label_ve_com_total_volume_model_guia"
+						htmlEscape="false"></spring:message> <c:out
+						value="${label_ve_com_total_volume_model_guia}" />
+				</label>:
+				<c:out value="${codigoGuia.guiaId.volumen}" />
+				<br />
+
+			</div>
+			<br />																	
+		</div>
+		<div id="right" style="float: right; width: 72%;">
+	<c:set scope="page" value="${detalleItems}" var="items"></c:set>
+	<c:choose>
+		<c:when test="${not empty items}">
+			<table style="width: 85%;">
+				<thead>
+					<tr>
+						<th colspan="5"><spring:message code="label_items_guia" /></th>
+					</tr>
+					<tr>
+						<th><spring:message
+								code="label_ve_com_tracking_model_notify_tracking" /></th>
+						<th><spring:message
+								code="label_ve_com_tracking_model_notify_descripcion" /></th>
+						<th><spring:message code="label_category"></spring:message></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${items}" var="item" varStatus="status">
+						<tr>
+							<td>${item.paqueteId.tracking}</td>
+							<td>${item.descripcion}</td>
+							<td>${item.categoriaDetalleId.nombre}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</c:when>
+		<c:otherwise>
+			<spring:message code="label_not_items_guia"></spring:message>
+		</c:otherwise>
+	</c:choose>
+	<br />
+	
+
+	<sec:authorize access="!hasRole('ROLE_CLIENT')">
+		<c:set scope="page"
+			value="${codigoGuia.guiaId.guiaReciboAlmacen.reciboAlmacenId}"
+			var="recibo"></c:set>
+		<c:choose>
+			<c:when test="${not empty recibo}">
+				<table style="width: 85%;">
+					<thead>
+						<tr>
+							<th colspan="8"><spring:message
+									code="label_title_recibo_de_almacen">
+									<c:out value=": ${recibo.id}"></c:out>
+								</spring:message></th>
+						</tr>
+						<tr>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_tipotransportacion"></spring:message>
+							</th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_cliente"></spring:message>
+							</th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_estatus"></spring:message>
+							</th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_created"></spring:message>
+							</th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_creadorid"></spring:message>
+							</th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_origen"></spring:message></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_destino"></spring:message>
+							</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>${recibo.tipoTransportacion}</td>
+							<td>${recibo.cliente.nombreCompleto}</td>
+							<td>${recibo.estatus}</td>
+							<td><fmt:formatDate value="${recibo.created.time}" /></td>
+							<td>${recibo.creatorId.nombreCompleto}</td>
+							<td>${recibo.origen.ciudad}</td>
+							<td>${recibo.destino.ciudad}</td>
+							<td class="utilbox"><spring:url
+									value="/admin/webflow/recibo" var="url">
+									<spring:param name="id" value="${recibo.id}" />
+								</spring:url> <spring:url value="/resources/images/show.png"
+									var="show_image_url" /> <spring:message
+									code="label_view_info_package" var="view_package" /> <a
+								href="${url}" alt="${view_package}" title="${view_package}">
+									<img alt="${view_package}" class="image"
+									src="${show_image_url}" title="${view_package}" />
+							</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<spring:message code="label_guia_not_added_to_warehouse"></spring:message>
+			</c:otherwise>
+		</c:choose>
+		<br />
+
+		<c:choose>
+			<c:when test="${not empty codigoGuia.codigoGuiaContenedor}">
+				<table style="width: 85%;">
+					<thead>
+						<tr>
+							<th colspan="4"><spring:message
+									code="label_contenedor_details" /></th>
+						</tr>
+						<tr>
+							<th><spring:message
+									code="label_ve_com_tracking_model_contenedor_codigo" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_contenedor_descripcion" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_contenedor_estatus" /></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>${codigoGuia.codigoGuiaContenedor.contenedorId.codigo}</td>
+							<td>${codigoGuia.codigoGuiaContenedor.contenedorId.descripcion}</td>
+							<td>${codigoGuia.codigoGuiaContenedor.contenedorId.estatus}</td>
+
+							<td class="utilbox"><spring:url
+									value="/admin/webflow/contenedor" var="url">
+									<spring:param name="id"
+										value="${codigoGuia.codigoGuiaContenedor.contenedorId.id}" />
+								</spring:url> <spring:url value="/resources/images/show.png"
+									var="show_image_url" /> <spring:message
+									code="label_view_info_package" var="view_package" /> <a
+								href="${url}" alt="${view_package}" title="${view_package}">
+									<img alt="${view_package}" class="image"
+									src="${show_image_url}" title="${view_package}" />
+							</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<spring:message code="label_guia_not_added_to_container" />
+			</c:otherwise>
+		</c:choose>
+	</sec:authorize>	
+		</div>
+	</div>
+	
+	
+
+
+
+</div>

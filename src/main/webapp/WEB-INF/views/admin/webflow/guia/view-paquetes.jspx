@@ -1,0 +1,46 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_guia_process_packages"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<h3>${fn:escapeXml(title)}</h3>
+		<form:form method="POST" modelAttribute="paquetesSelected"
+			onsubmit="return validateOnSubmit(this);">
+			<util:confirm-submit select="paquetesId" focus="paquetesId"
+				submit="save"></util:confirm-submit>
+			<c:choose>
+				<c:when test="${not empty guia.trackingListAsMap}">
+					<ul class="checkboxes-list">
+						<form:checkboxes element="li" items="${guia.trackingListAsMap}"
+							path="paquetesId" />
+					</ul>
+					<p>
+						<spring:message code="label_note_view_webflow_guia_paquetes"
+							htmlEscape="false" />
+					</p>
+					<br />
+				</c:when>
+				<c:otherwise>
+					<spring:message code="label_not_packages_notified_confirmed" />
+				</c:otherwise>
+			</c:choose>
+			<div class="submit-web-flow">
+				<spring:message var="save" code="button_save" htmlEscape="false" />
+				<input type="submit" id="save" name="save"
+					value="${fn:escapeXml(save)}" />
+				<spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+				<input type="submit" id="cancel" name="cancel"
+					value="${fn:escapeXml(cancel)}" />
+			</div>
+		</form:form>
+	</util:panel>
+</div>

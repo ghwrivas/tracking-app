@@ -1,0 +1,148 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="confirm_send_container"
+		var="confirm_send_container" htmlEscape="false" />
+	<spring:message code="confirm_country_container"
+		var="confirm_country_container" htmlEscape="false" />
+	<spring:message code="confirm_store_container"
+		var="confirm_store_container" htmlEscape="false" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(":submit").click(function() {
+				$("#_eventId").val(this.name);
+			});
+		});
+
+		function validateOnSubmit(form) {
+			var button = $('#_eventId').val();
+			if (button == 'enviar') {
+				if (confirm('${confirm_send_container}')) {
+					$("#enviar").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}
+			}else if(button = 'confirmarpais'){
+				if (confirm('${confirm_country_container}')) {
+					$("#confirmarpais").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}				
+			}else if(button = 'confirmaralmacen'){
+				if (confirm('${confirm_store_container}')) {
+					$("#confirmaralmacen").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}					
+			}
+		}
+	</script>
+	<spring:message var="title"
+		code="label_title_webflow_view_generated_contenedor"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<table>
+			<thead>
+				<tr>
+					<th colspan="5"><spring:message
+							code="label_contenedor_details" /></th>
+				</tr>
+				<tr>
+					<th><spring:message
+							code="label_ve_com_tracking_model_contenedor_codigo" /></th>
+					<th><spring:message
+							code="label_ve_com_tracking_model_contenedor_created" /></th>
+					<th><spring:message
+							code="label_ve_com_tracking_model_contenedor_updated" /></th>
+					<th><spring:message
+							code="label_ve_com_tracking_model_contenedor_descripcion" /></th>
+					<th><spring:message
+							code="label_ve_com_tracking_model_contenedor_estatus" /></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><c:out value="${contenedor.codigo}" /></td>
+					<td><fmt:formatDate value="${contenedor.created.time}"
+							type="both" /></td>
+					<td><fmt:formatDate value="${contenedor.updated.time}"
+							type="both" /></td>
+					<td><c:out value="${contenedor.descripcion}" /></td>
+					<td><c:out value="${contenedor.estatus}" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<util:guias-contenedor delete="false" />
+		<br />
+		<spring:url value="/admin/mediaview/contenedor/${contenedor.id}"
+			var="print_url"></spring:url>
+		<spring:message code="button_print" var="button_print"></spring:message>
+		<form action="${print_url}" method="get" target="_blank">
+			<div class="submit-web-flow">
+				<input type="submit" id="print" name="print" value="${button_print}" />
+				<span style="margin-left: 5px;"> </span>
+			</div>
+		</form>
+		<form method="POST" onsubmit="return validateOnSubmit(this);">
+			<input type="hidden" id="buttonClicked" /> <input type="hidden"
+				id="_eventId" name="_eventId" />
+			<div class="submit-web-flow">
+				<spring:message var="aceptar" code="button_aceptar"
+					htmlEscape="false" />
+				<input type="submit" id="aceptar" name="aceptar"
+					value="${fn:escapeXml(aceptar)}" /> <span
+					style="margin-left: 5px;"> </span>
+				<c:if
+					test="${contenedor.estatus == 'CREADO' and contenedor.guias.size() > 0}">
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_RECEPTOR')">
+						<spring:message var="enviar" code="button_enviar_contenedor"
+							htmlEscape="false" />
+						<input type="submit" id="enviar" name="enviar"
+							value="${fn:escapeXml(enviar)}" />
+						<span style="margin-left: 5px;"> </span>
+					</sec:authorize>
+				</c:if>
+				<c:if test="${contenedor.estatus == 'EN_TRANSITO_PAIS_DESTINO'}">
+					<sec:authorize access="hasAnyRole('ROLE_LIBERADOR')">
+						<spring:message var="confirmarpais"
+							code="button_confirmar_pais_contenedor" htmlEscape="false" />
+						<input type="submit" id="confirmarpais" name="confirmarpais"
+							value="${fn:escapeXml(confirmarpais)}" />
+						<span style="margin-left: 5px;"> </span>
+					</sec:authorize>
+				</c:if>
+				<c:if test="${contenedor.estatus == 'CONFIRMADO_PAIS_DESTINO'}">
+					<sec:authorize access="hasAnyRole('ROLE_LIBERADOR')">
+						<spring:message var="confirmaralmacen"
+							code="button_confirmar_almacen_contenedor" htmlEscape="false" />
+						<input type="submit" id="confirmaralmacen" name="confirmaralmacen"
+							value="${fn:escapeXml(confirmaralmacen)}" />
+						<span style="margin-left: 5px;"> </span>
+					</sec:authorize>
+				</c:if>
+				<c:if test="${contenedor.estatus == 'CONFIRMADO_ALMACEN_DESTINO'}">
+					<sec:authorize access="hasAnyRole('ROLE_LIBERADOR')">
+						<spring:message var="confirmaralmacen"
+							code="button_confirmar_almacen_guias_contenedor"
+							htmlEscape="false" />
+						<input type="submit" id="confirmaralmacen" name="confirmaralmacen"
+							value="${fn:escapeXml(confirmaralmacen)}" />
+						<span style="margin-left: 5px;"> </span>
+					</sec:authorize>
+				</c:if>
+			</div>
+		</form>
+	</util:panel>
+</div>

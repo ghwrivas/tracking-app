@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_ve_com_tracking_model_categoriadetalle" items="${categorias}" z="YYcH1pyJ6AGudsmi6V33GXM3OsE=">
+        <table:table data="${categorias}" delete="false" id="l_ve_com_tracking_model_categoriadetalle" path="/admin/categorias" z="DENjA1GFv8TxgNENZyt/cAGB15M=">
+            <table:column id="c_ve_com_tracking_model_categoriadetalle_name" property="nombre" z="DOFUjHXICjcJmM+EEL1GtgIqfTs="/>
+        </table:table>
+    </page:list>
+</div>

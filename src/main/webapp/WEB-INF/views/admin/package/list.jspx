@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="label_ve_com_tracking_model_paquetes"
+		var="entity" />
+	<spring:message code="label_ve_com_tracking_model_paquetes" var="title" />
+	<spring:message code="label_help_search_paquetes_cliente" var="help_search"></spring:message>
+	<util:panel title="${title}" id="pl_ve_com_tracking_model_paquetes">
+		<util:search tipoEstatus="${tipoEstatus}" trackingGenerado="true" description="${help_search}" />
+		<c:choose>
+			<c:when test="${not empty paquetes}">
+				<table>
+					<thead>
+						<tr>
+							<th><spring:message
+									code="label_ve_com_tracking_model_notify_tracking" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_notify_descripcion" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_notify_secured" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_paquete_tracking_generado" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_contenedor_estatus" /></th>
+							<th><spring:message code="label_date_notificacion" /></th>
+							<th><spring:message code="label_date_recepcion" /></th>
+							<th><spring:message
+									code="label_ve_com_tracking_model_guia_cliente" /></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${paquetes}" var="paquete">
+						<tr>
+							<td>${paquete.tracking}</td>
+							<c:choose>
+								<c:when
+									test="${not empty paquete.detalleRecepcion.descripcion and not empty paquete.detalleNotificacion.descripcion}">
+									<td><c:choose>
+											<c:when
+												test="${paquete.detalleNotificacion.descripcion != paquete.detalleRecepcion.descripcion}">
+									${paquete.detalleNotificacion.descripcion}-${paquete.detalleRecepcion.descripcion}
+									</c:when>
+											<c:otherwise>
+									${paquete.detalleNotificacion.descripcion}
+									</c:otherwise>
+										</c:choose></td>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${empty paquete.detalleRecepcion.descripcion}">
+											<td>${paquete.detalleNotificacion.descripcion}</td>
+										</c:when>
+										<c:otherwise>
+											<td>${paquete.detalleRecepcion.descripcion}</td>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+							<td>${paquete.labelAsegurar}</td>
+							<td><spring:message
+									code="label_boolean_value_${paquete.trackingGenerado}" /></td>
+							<td>${paquete.estatus}</td>
+							<td><fmt:formatDate
+									value="${paquete.detalleNotificacion.created.time}"
+									pattern="${detallerecepcions_created_date_format}" /></td>
+
+							<td><fmt:formatDate
+									value="${paquete.detalleRecepcion.created.time}"
+									pattern="${detallerecepcions_created_date_format}" /></td>
+							<td>${paquete.detalleNotificacion.usersId.nombreCompleto}</td>
+							<td class="utilbox"><spring:url value="/admin/package/show"
+									var="url">
+									<spring:param name="id" value="${paquete.id}" />
+								</spring:url> <spring:url value="/resources/images/show.png"
+									var="show_image_url" /> <spring:message
+									code="label_view_info_package" var="view_package" /> <a
+								href="${url}" alt="${view_package}" title="${view_package}">
+									<img alt="${view_package}" class="image"
+									src="${show_image_url}" title="${view_package}" />
+							</a></td>
+							<td class="utilbox"><spring:url
+									value="/admin/package/recepcionar" var="url">
+									<spring:param name="id" value="${paquete.id}" />
+								</spring:url> <spring:url value="/resources/images/report-odt.png"
+									var="show_image_url" /> <spring:message
+									code="menu_item_package_recepcionar_label"
+									var="recepcionar_package" /> <a href="${url}"
+								alt="${recepcionar_package}" title="${recepcionar_package}">
+									<img alt="${recepcionar_package}" class="image"
+									src="${show_image_url}" title="${recepcionar_package}" />
+							</a></td>
+						</tr>
+					</c:forEach>
+
+				</table>
+				<c:if test="${not empty maxPages}">
+					<util:pagination maxPages="${maxPages}" page="${param.page}"
+						size="${param.size}" searchString="${param.searchString}" />
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<spring:message arguments="${entity}" code="entity_not_found" />
+			</c:otherwise>
+		</c:choose>
+	</util:panel>
+</div>

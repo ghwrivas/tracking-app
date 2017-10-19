@@ -1,0 +1,41 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_panel_title_visualizar_info_guia" htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<util:guia-details />
+		<br />
+		<c:if test="${codigoGuia.estatus == 'CONFIRMADO_ALMACEN_DESTINO'}">
+		<sec:authorize access="hasRole('ROLE_LIBERADOR')">
+		<spring:url value="/admin/guia/entregar" var="entregar_url"></spring:url>
+		<div class="submit-web-flow" id="accountCreateForm_submit">
+			<form:form action="${entregar_url}" methodParam="POST" onsubmit="return validateOnSubmit(this);">
+				<util:confirm-submit select="entregar"
+					focus="entregar" submit="entregar" confirm="true"></util:confirm-submit>
+								
+				<input id="codigo" name="codigo" type="hidden" value="${codigoGuia.codigo}" />
+
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'entregar',
+						event : 'onclick'
+					}));
+				</script>
+				<spring:message code="button_entregar" var="button_entregar" />
+				<input id="entregar" name="entregar" type="submit" value="${button_entregar}" />
+
+			</form:form>
+		</div>
+		</sec:authorize>		
+		</c:if>
+	</util:panel>
+</div>

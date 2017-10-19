@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_ve_com_tracking_model_TipoCambio" modelAttribute="tipoCambio" path="/admin/tipocambio" versionField="none" z="2UWLjxlh/0UpvE6DVYrf58CUFL0=">
+        <field:select field="country" id="c_ve_com_tracking_model_TipoCambio_country" itemValue="isoAlpha2" items="${countrieses}" path="/admin/countrieses" z="PNoVy9b4yMlIRQF5mlAI8G9ooi0="/>
+        <field:input field="valorDolar" id="c_ve_com_tracking_model_TipoCambio_valorDolar" required="true" validationMessageCode="field_invalid_number" z="8IGwthGmK6G7mC/oeWD35TBcZFE="/>
+    </form:update>
+</div>

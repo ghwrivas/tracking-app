@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="confirm_save_changes" var="confirm_message" htmlEscape="false" />
+	<script type="text/javascript">
+		dojo.addOnLoad(function() {
+			dojo.byId('_tracking_id').focus();
+		});
+		
+		$(document).ready(function() {
+			$('input,select').blur(function(e) {e.preventDefault(); });
+			$('#_tracking_id').bind('keypress keydown keyup', function(e){
+			       if(e.keyCode == 13) { e.preventDefault(); }
+			});
+		});	 
+		
+		function validateOnSubmit(form) {
+			var valid = Spring.validateAll();
+			if (!valid) {
+				return false;
+			} else {
+				if (confirm('${confirm_message}')) {
+					$("#proceed").attr("disabled", "disabled");
+					return true;
+				} else {
+					return false;
+				}	
+			}
+		}
+	</script>
+	<spring:message code="menu_item_package_recepcionar_label" var="title" />
+	<util:panel id="title" title="${title}">
+		<form:form id="packageRecepcionarForm" method="POST"
+			modelAttribute="packageRecepcionarForm" onsubmit="return validateOnSubmit(this);">
+			<field:input field="tracking"
+				id="c_ve_com_tracking_model_notify_tracking" required="true"
+				z="user-managed" />
+			<field:select field="empresaEnvioId"
+				id="c_ve_com_tracking_model_notify_empresaEnvioId" itemValue="id"
+				itemLabel="name" items="${empresaenvioes}"
+				path="/admin/empresaenvio" required="true" />
+			<field:textarea id="c_ve_com_tracking_model_notify_descripcion"
+				field="descripcion" required="false" />
+			<div class="submit" id="packageRecepcionarForm_submit">
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<spring:message code="button_save" var="button_save" />
+				<input id="proceed" type="submit" value="${button_save}" /> <span
+					style="margin-left: 5px;"> </span>
+				<field:cancel path="/admin/package/list?page=1&amp;size=10"
+					label="button_cancel" />
+			</div>
+		</form:form>
+	</util:panel>
+</div>

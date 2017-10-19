@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_ve_com_tracking_model_EmpresaEnvio" modelAttribute="empresaEnvio" path="/admin/empresaenvio" render="${empty dependencies}" z="F+qG0Cz4vXh1Pf9I3tnVlIGeiGo=">
+        <field:simple field="detalleNotificacions" id="c_ve_com_tracking_model_EmpresaEnvio_detalleNotificacions" messageCode="entity_reference_not_managed" messageCodeAttribute="Detalle Notificacion" render="false" z="user-managed"/>
+        <field:simple field="detalleRecepcions" id="c_ve_com_tracking_model_EmpresaEnvio_detalleRecepcions" messageCode="entity_reference_not_managed" messageCodeAttribute="Detalle Recepcion" render="false" z="user-managed"/>
+        <field:input field="name" id="c_ve_com_tracking_model_EmpresaEnvio_name" required="true" z="CQ3rSg7mvo45vivbObQWWX2TFJU="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_ve_com_tracking_model_EmpresaEnvio" render="${not empty dependencies}" z="GKqpoyD4DGOiP1GX3W/mHflwBl8="/>
+</div>

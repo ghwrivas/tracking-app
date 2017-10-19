@@ -1,0 +1,120 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_guia_add_items"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<div style="height: auto; min-height: 200px;">
+			<form:form modelAttribute="item" id="item" method="POST">
+				<div style="width: 30%; float: left; margin-right: 1px;">
+					<spring:message
+						code="label_ve_com_tracking_model_detalleitems_paquete"
+						var="label_paquete" htmlEscape="false"></spring:message>
+					<form:label path="paqueteId">${label_paquete}:</form:label>
+					<form:select id="paqueteId" path="paqueteId" >
+					<form:option value=""></form:option>
+					 <c:forEach items="${recibo.paquetes}" var="paquete">
+					   <form:option value="${paquete.id}" label="${paquete.tracking} ${paquete.detalleRecepcion.descripcion}"></form:option>
+					 </c:forEach>
+					</form:select>
+					<form:errors path="paqueteId" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'paqueteId',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 1
+							}
+						}));
+					</script>
+					<br /> <br />
+					<spring:message code="label_category" var="label_category"
+						htmlEscape="false"></spring:message>
+					<form:label path="categoriaDetalleId">${label_category}:</form:label>
+					
+					<form:select id="categoriaDetalleId" path="categoriaDetalleId">
+										<form:option value=""></form:option>
+					 <c:forEach items="${categorias}" var="categoria">
+					   <form:option value="${categoria.id}" label="${categoria.nombre}"></form:option>
+					 </c:forEach>
+					</form:select>
+					 						
+					<form:errors path="categoriaDetalleId" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'categoriaDetalleId',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								required : true,
+								hasDownArrow : true,
+								tabIndex : 2
+							}
+						}));
+					</script>
+					<br /> <br />
+
+					<spring:message
+						code="label_ve_com_tracking_model_notify_descripcion"
+						var="label_description" htmlEscape="false"></spring:message>
+					<form:label path="descripcion">${label_description}:</form:label>
+					<form:input path="descripcion" placeholder="${label_description}"></form:input>
+					<form:errors path="descripcion" cssClass="errors"></form:errors>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : "descripcion",
+							widgetType : "dijit.form.ValidationTextBox",
+							widgetAttrs : {
+								required : true,
+								tabIndex : 3
+							}
+						}));
+					</script>
+					<br /> <br />
+					
+				<div class="submit">
+					<spring:message var="add" code="button_add_item" htmlEscape="false" />
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ValidateAllDecoration({
+							elementId : 'add',
+							event : 'onclick'
+						}));
+					</script>
+					<input type="submit" tabindex="5" id="add" name="_eventId_add"
+						value="${fn:escapeXml(add)}" />
+				</div>
+				</div>
+				<div style="width: 68%; float: right; margin-right: 1px;">
+					<util:items-guia items="${guia.items}" />				
+				</div>
+				<br/>
+			</form:form>
+		</div>
+		<br/>
+		<div>
+		<form method="POST" onsubmit="return validateOnSubmit(this);">
+			<util:confirm-submit select="paqueteId" focus="paqueteId"
+				submit="next" confirm="false"></util:confirm-submit>
+			<div class="submit-web-flow">
+					<spring:message var="next" code="button_next" htmlEscape="false" />
+					<input type="submit" id="next" tabindex="6" name="next"
+						value="${fn:escapeXml(next)}" />							
+<span style="margin-left: 5px;"> </span>
+				<spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+				<input type="submit" id="cancel" name="cancel" tabindex="7"
+					value="${fn:escapeXml(cancel)}" />
+					
+			</div>
+		</form>
+		</div>
+	</util:panel>
+</div>

@@ -1,0 +1,60 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_contenedor_add_guias"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<form:form modelAttribute="codigoGuiaContenedorForm" method="POST" cssClass=".submit-form"
+			onsubmit="return validateOnSubmit(this);">
+			<util:confirm-submit select="codigo" focus="codigo" submit="save" />
+			<div>
+			<div style="width: 30%; float: left;">
+			<label for="codigo"><spring:message
+					code="label_ve_com_tracking_model_guia_numero" />:</label>
+			<form:input path="codigo" id="codigo" cssStyle="width: 65%;" />
+			<script type="text/javascript">
+				Spring.addDecoration(new Spring.ElementDecoration({
+					elementId : "codigo",
+					widgetType : "dijit.form.ValidationTextBox",
+					widgetAttrs : {
+						required : true
+					}
+				}));
+			</script>
+			</div>
+			<div class="submit">
+				<spring:message var="add" code="button_add" htmlEscape="false" />
+				<input type="submit" id="add" name="add"
+					value="${fn:escapeXml(add)}" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'add',
+						event : 'onclick'
+					}));
+				</script>
+			</div>
+			</div>
+			
+			<br />
+			<util:guias-contenedor />
+			<br />
+			<div class="submit-web-flow">
+				<spring:message var="save" code="button_save" htmlEscape="false" />
+				<input type="submit" id="save" name="save"
+					value="${fn:escapeXml(save)}" />
+					<span style="margin-left: 5px;"> </span>
+				<spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+				<input type="submit" id="cancel" name="cancel"
+					value="${fn:escapeXml(cancel)}" />
+			</div>
+		</form:form>
+	</util:panel>
+</div>

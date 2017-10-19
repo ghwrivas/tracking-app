@@ -1,0 +1,52 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="title"
+		code="label_title_webflow_view_generated_sub_package"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<h3>${fn:escapeXml(title)}</h3>
+		<ul>
+			<li><spring:message
+					code="label_ve_com_tracking_model_guia_numero" htmlEscape="false" />:
+				<c:out value="${guia.id}" /></li>
+			<li><spring:message
+					code="label_ve_com_tracking_model_guia_created" htmlEscape="false" />:
+				<fmt:formatDate value="${guia.created.time}" type="both" /></li>
+			<li><spring:message
+					code="label_ve_com_tracking_model_guia_creadorid"
+					htmlEscape="false" />: <c:out
+					value="${guia.creadorId.nombreCompleto}" /></li>
+			<li><spring:message
+					code="label_ve_com_tracking_model_guia_cliente" htmlEscape="false" />:
+				<c:out value="${guia.cliente.nombreCompleto}" /></li>
+			<li><spring:message
+					code="label_ve_com_tracking_model_guia_estatus" htmlEscape="false" />:
+				<c:out value="${guia.estatus}" /></li>
+		</ul>
+		<br />
+		<util:items-guia items="${guia.items}" />
+		<br />
+		<util:totales-guia />
+		<br />
+		<form method="POST">
+			<div class="submit-web-flow">
+				<spring:message var="aceptar" code="button_aceptar"
+					htmlEscape="false" />
+				<input type="submit" id="aceptar" name="_eventId_aceptar"
+					value="${fn:escapeXml(aceptar)}" />
+				<spring:message var="paquetes"
+					code="label_ve_com_tracking_model_paquetes" htmlEscape="false" />
+				<input type="submit" id="paquetes" name="_eventId_paquetes"
+					value="${fn:escapeXml(paquetes)}" />
+			</div>
+		</form>
+	</util:panel>
+</div>

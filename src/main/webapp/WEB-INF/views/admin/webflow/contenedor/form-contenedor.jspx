@@ -1,0 +1,41 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.addOnLoad(function() {
+			dojo.byId('_descripcion').focus();
+			dojo.byId('_descripcion').select();
+		});
+	</script>
+	<spring:message var="title"
+		code="label_title_webflow_generate_update_contenedor_datos"
+		htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+		<form:form modelAttribute="contenedor" cssClass=".submit-form" id="contenedor" method="POST">
+			<field:input field="descripcion"
+				id="c_ve_com_tracking_model_Contenedor_descripcion" z="user-managed" />
+			<div class="submit-web-flow">
+				<spring:message var="next" code="button_next" htmlEscape="false" />
+				<input type="submit" id="next" name="_eventId_next"
+					value="${fn:escapeXml(next)}" />			
+				<spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+				<span style="margin-left: 5px;"> </span>
+				<input type="submit" id="cancel" name="_eventId_cancel"
+					value="${fn:escapeXml(cancel)}" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'next',
+						event : 'onclick'
+					}));
+				</script>
+			</div>
+		</form:form>
+	</util:panel>
+</div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<body>
+Sr(a): $destinatario<span/><p/>
+<p>
+El producto con n&uacute;mero de seguimiento $codigo, ha cambiado de estatus.<p/>
+
+Estatus Nuevo: $estatus<br/>
+
+Informaci&oacute;n del producto: <a href="$url" title="$url"  >$url<a/><p/>
+
+<br/>
+<p/>
+
+El presente correo es enviado automaticamente por nuestro sistema, por favor, no responda, ni reenv&iacute;e mensajes a esta cuenta.
+
+<br/>
+<p/>
+
+<p style="color: blue;">
+$empresa<br/>
+$direccion<br/>
+Telf.: $telefono<p/>
+
+</body>
+</html>

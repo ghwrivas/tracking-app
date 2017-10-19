@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_ve_com_tracking_model_TipoCambio" items="${tipocambios}" z="225YgewVg1B8j9vR8NuHk6//WLw=">
+        <table:table data="${tipocambios}" delete="false" id="l_ve_com_tracking_model_TipoCambio" path="/admin/tipocambio" z="+wSnCrdB9lbGnO2+2THgYkjiyKY=">
+            <table:column id="c_ve_com_tracking_model_TipoCambio_country" property="country" z="B+f2k0HiLeUyahm6eZGNHu7k728="/>
+            <table:column id="c_ve_com_tracking_model_TipoCambio_valorDolar" property="valorDolar" z="rUxF7JSWhifVU9PBo7K+rW/MD8k="/>
+        </table:table>
+    </page:list>
+</div>

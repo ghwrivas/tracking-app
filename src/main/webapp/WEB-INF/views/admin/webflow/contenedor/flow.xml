@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<secured attributes="ROLE_USER, ROLE_ADMIN" match="any" />
+
+	<persistence-context />
+
+	<on-start>
+		<evaluate
+			expression="contenedorManager.createOrUpdateContenedor(requestParameters.id)"
+			result="flowScope.contenedor" />
+		<evaluate expression="contenedorManager.createGuiaContenedorForm()"
+			result="flowScope.codigoGuiaContenedorForm" />
+		<evaluate expression="new ve.com.tracking.forms.ConfirmGuiasAlmacenForm()"
+			result="flowScope.confirmGuiasAlmacenForm" result-type="java.io.Serializable" />
+	</on-start>
+
+	<decision-state id="guia-null">
+		<if test="flowScope.contenedor != null" then="can-be-edit" else="form-contenedor" />
+	</decision-state>
+
+	<action-state id="can-be-edit">
+		<evaluate expression="contenedorManager.canBeEdit" />
+		<transition on="yes" to="form-contenedor" />
+		<transition on="no" to="view-saved-contenedor" />
+		<transition on="error" to="end-state" />		
+	</action-state>
+
+	<!-- form create or edit contenedor -->
+	<view-state id="form-contenedor" view="admin/webflow/contenedor/form-contenedor"
+		model="contenedor">
+		<transition on="next" to="form-add-guia" />
+		<transition on="cancel" to="end-state" bind="false"
+			validate="false" />
+	</view-state>
+
+	<!-- A sample view state -->
+	<view-state id="form-add-guia" view="admin/webflow/contenedor/form-add-guia"
+		model="codigoGuiaContenedorForm">
+		<transition on="add" to="add-guia" bind="true" validate="true" />
+		<transition on="save" to="save-contenedor" bind="false" />
+		<transition on="delete" to="delete-guia" bind="false" />
+		<transition on="cancel" to="end-state" validate="false" />
+	</view-state>
+
+	<view-state id="view-saved-contenedor"
+		view="admin/webflow/contenedor/view-saved-contenedor">
+		<transition on="aceptar" to="end-state" />
+		<transition on="enviar" to="enviar-contenedor" />
+		<transition on="confirmarpais" to="confirmar-contenedor-pais" />
+		<transition on="confirmaralmacen" to="can-confirm" />
+	</view-state>
+
+	<view-state id="form-confirm-guias" view="admin/webflow/contenedor/form-confirm-guias"
+		model="confirmGuiasAlmacenForm">
+		<on-render>
+		<evaluate expression="contenedorManager.mapGuiasContenedorToConfirm" />
+		</on-render>
+		<transition on="confirm" to="confirm-guias-contenedor" />
+		<transition on="cancel" to="view-saved-contenedor" bind="false"
+			validate="false" />
+	</view-state>
+
+	<action-state id="can-confirm">
+		<evaluate expression="contenedorManager.canConfirmContenedorGuiasAlmacen" />
+		<transition on="yes" to="form-confirm-guias" />
+		<transition on="no" to="view-saved-contenedor" />
+	</action-state>
+
+	<action-state id="confirm-guias-contenedor">
+		<evaluate expression="contenedorManager.confirmGuiasContenedor" />
+		<transition on="success" to="view-saved-contenedor" />
+		<transition on="error" to="form-confirm-guias" />
+	</action-state>
+
+	<action-state id="enviar-contenedor">
+		<evaluate expression="contenedorManager.enviarContenedor" />
+		<transition on="success" to="view-saved-contenedor" />
+		<transition on="error" to="view-saved-contenedor" />
+	</action-state>
+
+	<action-state id="confirmar-contenedor-pais">
+		<evaluate expression="contenedorManager.confirmEnDestino" />
+		<transition on="success" to="view-saved-contenedor" />
+		<transition on="error" to="view-saved-contenedor" />
+	</action-state>
+
+	<action-state id="delete-guia">
+		<on-entry>
+			<set name="requestScope.index" value="requestParameters.listIndex"
+				type="java.lang.Integer"></set>
+		</on-entry>
+		<evaluate expression="contenedorManager.deleteGuia"></evaluate>
+		<transition on="success" to="form-add-guia" />
+		<transition on="error" to="form-add-guia" />
+	</action-state>
+
+	<action-state id="add-guia">
+		<on-entry>
+			<set name="requestScope.guia" value="requestParameters.guia"
+				type="java.lang.Long"></set>
+		</on-entry>
+		<evaluate expression="contenedorManager.addGuia" />
+		<transition on="success" to="form-add-guia" />
+		<transition on="error" to="form-add-guia" />
+	</action-state>
+
+	<action-state id="save-contenedor">
+		<evaluate expression="contenedorManager.saveContenedor" />
+		<transition on="success" to="view-saved-contenedor"></transition>
+		<transition on="error" to="form-add-guia"></transition>
+	</action-state>
+
+	<!-- end state -->
+	<end-state id="end-state"
+		view="externalRedirect:contextRelative:admin/contenedor?page=1&amp;size=10" />
+</flow>
